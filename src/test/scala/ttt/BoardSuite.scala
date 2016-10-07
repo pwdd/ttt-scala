@@ -26,12 +26,20 @@ class BoardSuite extends FunSuite{
     assert(move(List(x, o, e, e, e, x, e, e, e), o, 3) == List(x, o, e, o, e, x, e, e, e))
   }
 
-  test("isFull: returns false if board has only emptySpots") {
-    assert(!isFull(emptyBoard))
+  test("isBoardFull: returns false if board has only emptySpots") {
+    assert(!isBoardFull(emptyBoard))
   }
 
-  test("isFull: returns false if there is any emptySpot") {
-    assert(!isFull(List(x, x, o, e, x, o, x, o, x)))
+  test("isBoardFull: returns false if there is any emptySpot") {
+    assert(!isBoardFull(List(x, x, o, e, x, o, x, o, x)))
+  }
+
+  test("isBoardEmpty: returns true if it is new board") {
+    assert(isBoardEmpty(emptyBoard))
+  }
+
+  test("isBoardEmpty: returns false if there is any marker on board") {
+    assert(!isBoardEmpty(List(e, e, e, x, e, e, e, e, e)))
   }
 
   test("isSpotAvailable: returns true if spot has an emptySpot") {

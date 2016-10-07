@@ -23,7 +23,9 @@ object Board {
     board.updated(spot, marker)
   }
 
-  def isFull(board: List[Symbol]): Boolean = !board.contains(emptySpot)
+  def isBoardFull(board: List[Symbol]): Boolean = !board.contains(emptySpot)
+
+  def isBoardEmpty(board: List[Symbol]): Boolean = board == newBoard(boardLength)
 
   def isSpotAvailable(board: List[Symbol], spot: Int): Boolean = board(spot) == emptySpot
 
