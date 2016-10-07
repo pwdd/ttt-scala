@@ -30,4 +30,8 @@ object Board {
   def availableSpots(board: List[Symbol]): List[Int] = {
     board.zipWithIndex.collect{ case(e, i) if e == emptySpot => i }
   }
+
+  def hasRepeatedMarkers(board: List[Symbol]): Boolean = {
+    false
+  }
 }

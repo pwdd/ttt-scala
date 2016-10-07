@@ -39,7 +39,7 @@ class BoardSuite extends FunSuite{
   }
 
   test("isSpotAvailable: returns false if spot has a marker") {
-    assert(isSpotAvailable(List(x, e, e, e, e, e, e, e, e), 0) == false)
+    assert(!isSpotAvailable(List(x, e, e, e, e, e, e, e, e), 0))
   }
 
   test("availableSpots: returns the all the indexes of board if board is empty") {
@@ -48,5 +48,16 @@ class BoardSuite extends FunSuite{
 
   test("availableSpots: returns a List with the indexes that have emptySpots") {
     assert(availableSpots(List(x, x, e, o, o, e, e, x, o)) == List(2, 5, 6))
+  }
+
+  test("hasRepeatedMarkers: returns false if board has only emptySpots") {
+    assert(!hasRepeatedMarkers(emptyBoard))
+  }
+
+  test("hasRepeatedMarkers: returns false if board is full and there is no winner") {
+    val board = List(x, e, x,
+                     e, e, x,
+                     x, x, e)
+    assert(!hasRepeatedMarkers(board))
   }
 }
