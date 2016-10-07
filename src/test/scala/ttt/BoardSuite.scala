@@ -51,13 +51,27 @@ class BoardSuite extends FunSuite{
   }
 
   test("hasRepeatedMarkers: returns false if board has only emptySpots") {
-    assert(!hasRepeatedMarkers(emptyBoard))
+    assert(!hasRepeatedMarkers(emptyBoard, List(0, 1, 2)))
   }
 
   test("hasRepeatedMarkers: returns false if board is full and there is no winner") {
     val board = List(x, e, x,
                      e, e, x,
                      x, x, e)
-    assert(!hasRepeatedMarkers(board))
+    assert(!hasRepeatedMarkers(board, List(0, 1, 2)))
+  }
+
+  test("hasRepeatedMarkers: returns false if there is no repeated markers on winningPositions") {
+    val board = List(x, x, e,
+                     o, o, e,
+                     e, x, o)
+    assert(!hasRepeatedMarkers(board, List(0, 1, 2)))
+  }
+
+  test("hasRepeatedMarkers: returns true if there are repeated markers on a given combo") {
+    val board = List(x, x, e,
+                     o, o, o,
+                     e, x, e)
+    assert(hasRepeatedMarkers(board, List(3, 4, 5)))
   }
 }

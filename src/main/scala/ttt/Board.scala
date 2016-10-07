@@ -31,7 +31,9 @@ object Board {
     board.zipWithIndex.collect{ case(e, i) if e == emptySpot => i }
   }
 
-  def hasRepeatedMarkers(board: List[Symbol]): Boolean = {
-    false
+  def hasRepeatedMarkers(board: List[Symbol], indexes: List[Int]): Boolean = {
+    val markersOnIndexes = indexes.map(board(_))
+    val first = markersOnIndexes.head
+    first != emptySpot && markersOnIndexes.forall(e => e == first)
   }
 }
