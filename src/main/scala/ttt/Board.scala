@@ -36,4 +36,14 @@ object Board {
     val first = markersOnIndexes.head
     first != emptySpot && markersOnIndexes.forall(e => e == first)
   }
+
+  def winCombo(board: List[Symbol]): List[Int] = {
+    val pairs = winCombos.map(hasRepeatedMarkers(board, _)).zipWithIndex
+    val winAt = pairs.indexWhere(_._1)
+    winCombos(winAt)
+  }
+
+  def isValidMove(board: List[Symbol], spot: Int): Boolean = {
+    spot >= 0 && spot < board.length && board(spot) == emptySpot
+  }
 }
