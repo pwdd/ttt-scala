@@ -25,5 +25,9 @@ object Board {
 
   def isFull(board: List[Symbol]): Boolean = !board.contains(emptySpot)
 
-  def isSpotAvailable(board: List[Symbol], spot: Int) = board(spot) == emptySpot
+  def isSpotAvailable(board: List[Symbol], spot: Int): Boolean = board(spot) == emptySpot
+
+  def availableSpots(board: List[Symbol]): List[Int] = {
+    board.zipWithIndex.collect{ case(e, i) if e == emptySpot => i }
+  }
 }

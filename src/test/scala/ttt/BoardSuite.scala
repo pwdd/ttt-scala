@@ -4,7 +4,8 @@ import org.scalatest.FunSuite
 import Board._
 
 class BoardSuite extends FunSuite{
-  val emptyBoard = newBoard(9)
+  val length = 9
+  val emptyBoard = newBoard(length)
   val e = emptySpot
   val x = firstPlayer
   val o = secondPlayer
@@ -39,5 +40,13 @@ class BoardSuite extends FunSuite{
 
   test("isSpotAvailable: returns false if spot has a marker") {
     assert(isSpotAvailable(List(x, e, e, e, e, e, e, e, e), 0) == false)
+  }
+
+  test("availableSpots: returns the all the indexes of board if board is empty") {
+    assert(availableSpots(emptyBoard) == List.range(0, length))
+  }
+
+  test("availableSpots: returns a List with the indexes that have emptySpots") {
+    assert(availableSpots(List(x, x, e, o, o, e, e, x, o)) == List(2, 5, 6))
   }
 }
