@@ -1,7 +1,9 @@
 package ttt
 
 object Board {
-  val emptySpot = Symbol("_")
+  val emptySpot = '_
+  val firstPlayer = 'x
+  val secondPlayer = 'o
 
   val winCombos = List(List(0, 1, 2),
                        List(3, 4, 5),
@@ -16,4 +18,12 @@ object Board {
   val boardLength = boardSize * boardSize
 
   def newBoard(length: Int): List[Symbol] = List.fill(length)(emptySpot)
+
+  def move(board: List[Symbol], marker: Symbol, spot: Int): List[Symbol] = {
+    board.updated(spot, marker)
+  }
+
+  def isFull(board: List[Symbol]): Boolean = !board.contains(emptySpot)
+
+  def isSpotAvailable(board: List[Symbol], spot: Int) = board(spot) == emptySpot
 }
