@@ -56,32 +56,4 @@ class BoardSuite extends FunSuite{
   test("availableSpots: returns a List with the indexes that have emptySpots") {
     assert(Board.availableSpots(List(x, x, e, o, o, e, e, x, o)) == List(2, 5, 6))
   }
-
-  test("winCombo: returns the indexes of the second row if it has repeated markers") {
-    val board = List(x, o, e,
-                     x, x, x,
-                     o, o, e)
-    assert(Board.winCombo(board) == List(3, 4, 5))
-  }
-
-  test("winCombo: returns the indexes of the third column if it has repeated markers") {
-    val board = List(x, o, o,
-                     x, e, o,
-                     e, x, o)
-    assert(Board.winCombo(board) == List(2, 5, 8))
-  }
-
-  test("winCombo: returns the indexes of a diagonal if it has repeated markers") {
-    val board = List(e, o, x,
-                     e, x, o,
-                     x, e, o)
-    assert(Board.winCombo(board) == List(2, 4, 6))
-  }
-
-  test("winCombo: returns an empty list if there is no winning combo") {
-    val board = List(x, x, o,
-                     o, o, x,
-                     x, o, x)
-    assert(Board.winCombo(board) == List())
-  }
 }

@@ -1,12 +1,18 @@
 package ttt
 
 object Messenger {
+  val chooseANumber = "Please enter a number from 1 to 9: "
+  val invalidMove = "Your choice is not valid. " +  "\n" + chooseANumber
+
+  def finalMessage(winner: Symbol, position: List[Int]): String = {
+    val indexToUserFriendlyNumbers = position.map(_ + 1)
+    val posToStr = indexToUserFriendlyNumbers.mkString(", ")
+    "Player '" + winner.name + "' won on positions " + posToStr + "\n"
+  }
 
   def strBoard(board: List[Symbol]): String = {
     val pipe = "|"
     val separator = "\n---|---|---\n"
-
-    val chooseANumber = "Please enter a number from 1 to 9"
 
     def symbolToStr(marker: Symbol): String = {
       if (marker == Board.emptySpot) "   "
@@ -18,6 +24,6 @@ object Messenger {
       breakLines.mkString(separator)
     }
 
-    buildStrBoard(board.map(symbolToStr)).toString
+    "\n" + buildStrBoard(board.map(symbolToStr)).toString + "\n"
   }
 }

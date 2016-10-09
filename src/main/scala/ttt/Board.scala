@@ -5,15 +5,6 @@ object Board {
   val firstPlayer = 'x
   val secondPlayer = 'o
 
-  val winCombos = List(List(0, 1, 2),
-                       List(3, 4, 5),
-                       List(6, 7, 8),
-                       List(0, 3, 6),
-                       List(1, 4, 7),
-                       List(2, 5, 8),
-                       List(0, 4, 8),
-                       List(2, 4, 6))
-
   val boardSize = 3
   val boardLength = boardSize * boardSize
 
@@ -31,20 +22,5 @@ object Board {
 
   def availableSpots(board: List[Symbol]): List[Int] = {
     board.zipWithIndex.collect{ case(e, i) if e == emptySpot => i }
-  }
-
-  def winCombo(board: List[Symbol]): List[Int] = {
-
-    def hasRepeatedMarkers(board: List[Symbol], indexes: List[Int]): Boolean = {
-      val markersOnIndexes = indexes.map(board(_))
-      val first = markersOnIndexes.head
-      first != emptySpot && markersOnIndexes.forall(e => e == first)
-    }
-
-    val pairs = winCombos.map(hasRepeatedMarkers(board, _)).zipWithIndex
-    val winAt = pairs.indexWhere(_._1)
-
-    if (winAt == -1) List()
-    else winCombos(winAt)
   }
 }
