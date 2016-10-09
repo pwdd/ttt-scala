@@ -45,8 +45,4 @@ object Board {
     val winAt = pairs.indexWhere(_._1)
     winCombos(winAt)
   }
-
-  def isValidMove(board: List[Symbol], spot: Int): Boolean = {
-    spot >= 0 && spot < board.length && board(spot) == emptySpot
-  }
 }
