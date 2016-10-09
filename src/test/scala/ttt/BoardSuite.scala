@@ -75,5 +75,13 @@ class BoardSuite extends FunSuite{
     val board = List(e, o, x,
                      e, x, o,
                      x, e, o)
+    assert(Board.winCombo(board) == List(2, 4, 6))
+  }
+
+  test("winCombo: returns an empty list if there is no winning combo") {
+    val board = List(x, x, o,
+                     o, o, x,
+                     x, o, x)
+    assert(Board.winCombo(board) == List())
   }
 }

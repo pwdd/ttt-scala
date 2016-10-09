@@ -43,6 +43,8 @@ object Board {
 
     val pairs = winCombos.map(hasRepeatedMarkers(board, _)).zipWithIndex
     val winAt = pairs.indexWhere(_._1)
-    winCombos(winAt)
+
+    if (winAt == -1) List()
+    else winCombos(winAt)
   }
 }

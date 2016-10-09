@@ -6,6 +6,8 @@ object Messenger {
     val pipe = "|"
     val separator = "\n---|---|---\n"
 
+    val chooseANumber = "Please enter a number from 1 to 9"
+
     def symbolToStr(marker: Symbol): String = {
       if (marker == Board.emptySpot) "   "
       else " " + marker.name + " "
