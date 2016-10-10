@@ -11,28 +11,28 @@ class RulesSuite extends FunSuite {
     val board = List(x, o, e,
                      x, x, x,
                      o, o, e)
-    assert(Rules.winCombo(board) == List(3, 4, 5))
+    assert(Rules.winCombo(board) === List(3, 4, 5))
   }
 
   test("winCombo: returns the indexes of the third column if it has repeated markers") {
     val board = List(x, o, o,
-      x, e, o,
-      e, x, o)
-    assert(Rules.winCombo(board) == List(2, 5, 8))
+                     x, e, o,
+                     e, x, o)
+    assert(Rules.winCombo(board) === List(2, 5, 8))
   }
 
   test("winCombo: returns the indexes of a diagonal if it has repeated markers") {
     val board = List(e, o, x,
-      e, x, o,
-      x, e, o)
-    assert(Rules.winCombo(board) == List(2, 4, 6))
+                     e, x, o,
+                     x, e, o)
+    assert(Rules.winCombo(board) === List(2, 4, 6))
   }
 
   test("winCombo: returns an empty list if there is no winning combo") {
     val board = List(x, x, o,
-      o, o, x,
-      x, o, x)
-    assert(Rules.winCombo(board) == List())
+                     o, o, x,
+                     x, o, x)
+    assert(Rules.winCombo(board) === List())
   }
 
   test("isDraw: returns false if board is not full") {
@@ -79,13 +79,13 @@ class RulesSuite extends FunSuite {
     assert(Rules.winner(List(x, x, x,
                              o, o, e,
                              e, e, e))
-                        == x)
+                        === x)
   }
 
   test("winner: returns seconcPlayer if it won the game") {
     assert(Rules.winner(List(x, x, o,
                              e, o, e,
                              o, x, e))
-                        == o)
+                        === o)
   }
 }

@@ -17,7 +17,9 @@ class ValidationSuite extends  FunSuite {
   }
 
   test("isValidMove: returns false if arg is a spot that has a marker") {
-    val board = List(e, x, e, e, e, e, e, e, e)
+    val board = List(e, x, e,
+                     e, e, e,
+                     e, e, e)
     assert(!Validation.isValidMove(board, 1))
   }
 

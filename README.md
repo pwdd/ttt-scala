@@ -1,4 +1,4 @@
-# WIP
+# Readme
 
 * Running the game:
   
@@ -12,3 +12,4 @@
 * Running the tests:
   
   From root, run `sbt test`
+

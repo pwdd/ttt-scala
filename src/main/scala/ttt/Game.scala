@@ -5,8 +5,8 @@ object Game {
     val spot = Prompt.getSpot(board, Messenger.chooseANumber)
     val newBoard = Board.move(board, currentPlayer, spot)
 
-    println(Messenger.currentPlayerIs(opponent))
-    println(Messenger.strBoard(newBoard))
+    View.printMessage(Messenger.currentPlayerIs(opponent))
+    View.printMessage(Messenger.strBoard(newBoard))
 
     if (Rules.gameOver(newBoard)) {
       if (Rules.isDraw(newBoard)) println(Messenger.draw(newBoard))
@@ -17,14 +17,15 @@ object Game {
   }
 
   def play(): Unit = {
+    val board = Board.newBoard(Board.boardLength)
 
     def initialMsg() = {
-      println("Starting the game...")
-      println(Messenger.currentPlayerIs(Board.firstPlayer))
-      println(Messenger.strBoard(Board.newBoard(9)))
+      View.printMessage("Starting the game...")
+      View.printMessage(Messenger.currentPlayerIs(Board.firstPlayer))
+      View.printMessage(Messenger.strBoard(board))
     }
 
     initialMsg()
-    gameLoop(Board.newBoard(9), Board.firstPlayer, Board.secondPlayer)
+    gameLoop(board, Board.firstPlayer, Board.secondPlayer)
   }
 }
