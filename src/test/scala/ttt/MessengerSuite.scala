@@ -9,10 +9,12 @@ class MessengerSuite extends FunSuite {
 
   test("printBoard: returns a string version of the board") {
     val separator = "\n---|---|---\n"
-    assert(Messenger.strBoard(List(x, o, x, o, x, o, x, o, x)) == " x | o | x " +
-                                                                    separator +
-                                                                  " o | x | o " +
-                                                                    separator +
-                                                                  " x | o | x ")
+    assert(Messenger.strBoard(List(x, o, x, o, x, o, x, o, x))  == "\n" +
+                                                                   " x | o | x " +
+                                                                     separator +
+                                                                   " o | x | o " +
+                                                                     separator +
+                                                                   " x | o | x " +
+                                                                   "\n")
   }
 }

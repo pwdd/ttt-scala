@@ -14,7 +14,12 @@ object Prompt {
 
     def inputToNumber(): Int = input.toInt - 1
 
-    if (isNumber && Validation.isValidMove(board, inputToNumber())) inputToNumber()
+    def isEmptyStr: Boolean = input == ""
+
+    if (!isEmptyStr &&
+        isNumber &&
+        Validation.isValidMove(board, inputToNumber()))
+      inputToNumber()
     else getSpot(board, Messenger.invalidMove)
   }
 }

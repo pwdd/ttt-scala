@@ -6,9 +6,12 @@ object Messenger {
 
   def currentPlayerIs(player: Symbol): String = "\nCurrent player is '" + player.name + "'"
 
-  def finalMessage(winner: Symbol, position: List[Int]): String = {
+  def draw(board: List[Symbol]): String = "The game tied!\n"
+
+  def winner(winner: Symbol, position: List[Int]): String = {
     val indexToUserFriendlyNumbers = position.map(_ + 1)
     val posToStr = indexToUserFriendlyNumbers.mkString(", ")
+
     "Player '" + winner.name + "' won on positions " + posToStr + "\n"
   }
 

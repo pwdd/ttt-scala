@@ -8,9 +8,12 @@ object Game {
     println(Messenger.currentPlayerIs(opponent))
     println(Messenger.strBoard(newBoard))
 
-    if (Rules.gameOver(newBoard))
-      println(Messenger.finalMessage(Rules.winner(newBoard), Rules.winCombo(newBoard)))
-    else gameLoop(newBoard, opponent, currentPlayer)
+    if (Rules.gameOver(newBoard)) {
+      if (Rules.isDraw(newBoard)) println(Messenger.draw(newBoard))
+      else println(Messenger.winner(Rules.winner(newBoard), Rules.winCombo(newBoard)))
+    } else {
+      gameLoop(newBoard, opponent, currentPlayer)
+    }
   }
 
   def play(): Unit = {
