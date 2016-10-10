@@ -5,6 +5,7 @@ object Game {
     val spot = Prompt.getSpot(board, Messenger.chooseANumber)
     val newBoard = Board.move(board, currentPlayer, spot)
 
+    println(Messenger.currentPlayerIs(opponent))
     println(Messenger.strBoard(newBoard))
 
     if (Rules.gameOver(newBoard))
@@ -15,7 +16,8 @@ object Game {
   def play(): Unit = {
 
     def initialMsg() = {
-      println("Welcome to Tic Tac Toe")
+      println("Starting the game...")
+      println(Messenger.currentPlayerIs(Board.firstPlayer))
       println(Messenger.strBoard(Board.newBoard(9)))
     }
 

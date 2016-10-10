@@ -4,6 +4,8 @@ object Messenger {
   val chooseANumber = "Please enter a number from 1 to 9: "
   val invalidMove = "Your choice is not valid. " +  "\n" + chooseANumber
 
+  def currentPlayerIs(player: Symbol): String = "\nCurrent player is '" + player.name + "'"
+
   def finalMessage(winner: Symbol, position: List[Int]): String = {
     val indexToUserFriendlyNumbers = position.map(_ + 1)
     val posToStr = indexToUserFriendlyNumbers.mkString(", ")
