@@ -2,7 +2,7 @@ package ttt
 
 import org.scalatest.FunSuite
 
-class BoardSuite extends FunSuite{
+class BoardSuite extends FunSuite {
   val length = 9
   val emptyBoard = Board.newBoard(length)
   val e = Board.emptySpot

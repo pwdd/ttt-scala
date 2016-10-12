@@ -1,17 +1,21 @@
 package ttt
 
 object Game {
-  def gameLoop(board: List[Symbol], currentPlayer: Symbol, opponent: Symbol): Unit = {
-    val spot = Prompt.getSpot(board, Messenger.chooseANumber)
-    val newBoard = Board.move(board, currentPlayer, spot)
+  def gameLoop(board: List[Symbol], currentPlayer: Player, opponent: Player): Unit = {
+    val spot = currentPlayer.getSpot(board, Messenger.chooseANumber)
+    val newBoard = Board.move(board, currentPlayer.marker, spot)
 
-    View.printMessage(Messenger.currentPlayerIs(opponent))
-    View.printMessage(Messenger.strBoard(newBoard))
+    def finalMsg(board: List[Symbol]): Unit = board match {
+      case b if Rules.isDraw(b) => println(Messenger.draw(b))
+      case _ => println(Messenger.winner(Rules.winner(board), Rules.winCombo(board)))
+    }
 
     if (Rules.gameOver(newBoard)) {
-      if (Rules.isDraw(newBoard)) println(Messenger.draw(newBoard))
-      else println(Messenger.winner(Rules.winner(newBoard), Rules.winCombo(newBoard)))
+      View.printMessage(Messenger.strBoard(board))
+      finalMsg(newBoard)
     } else {
+      View.printMessage(Messenger.currentPlayerIs(opponent.marker))
+      View.printMessage(Messenger.strBoard(newBoard))
       gameLoop(newBoard, opponent, currentPlayer)
     }
   }
@@ -26,6 +30,6 @@ object Game {
     }
 
     initialMsg()
-    gameLoop(board, Board.firstPlayer, Board.secondPlayer)
+    gameLoop(board, new Player(Board.firstPlayer, 'human), new Player(Board.secondPlayer, 'human))
   }
 }

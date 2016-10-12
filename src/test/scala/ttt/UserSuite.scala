@@ -4,7 +4,7 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 
 import org.scalatest.FunSuite
 
-class PromptSuite extends FunSuite {
+class UserSuite extends FunSuite {
   val stream = new ByteArrayOutputStream()
   val board = Board.newBoard(9)
   val e = Board.emptySpot
@@ -16,19 +16,27 @@ class PromptSuite extends FunSuite {
 
     Console.withOut(stream) {
       Console.withIn(in) {
-        assert(Prompt.getSpot(board, "foo") === expected)
+        assert(User.getSpot(board, "foo") === expected)
       }
     }
+  }
+
+  test("User: implements 'marker' from 'Player' trait") {
+    assert(User.marker.isInstanceOf[Symbol])
+  }
+
+  test("User: implements 'role' from 'Player' trait") {
+    assert(User.role.isInstanceOf[Symbol])
   }
 
   test("getSpot: returns index if input - 1 is in range") {
     mock(board, "1", 0)
   }
-  
+
   test("getSpot: returns index if input - 1 is index of emptySpot") {
     mock(board, "3", 2)
   }
-  
+
   test("getSpot: recurs if input is invalid") {
     mock(board, "0\na\n1", 0)
   }

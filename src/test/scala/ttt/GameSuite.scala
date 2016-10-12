@@ -6,13 +6,15 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 class GameSuite extends FunSuite with Matchers {
   val board = Board.newBoard(9)
   val stream = new ByteArrayOutputStream()
+  val firstHuman = new Player(Board.firstPlayer, 'human)
+  val secondHuman = new Player(Board.secondPlayer, 'human)
 
   def mock(input: String) = {
     val in = new ByteArrayInputStream(input.getBytes())
 
     Console.withOut(stream) {
       Console.withIn(in) {
-        noException should be thrownBy Game.gameLoop(board, Board.firstPlayer, Board.secondPlayer)
+        noException should be thrownBy Game.gameLoop(board, firstHuman, secondHuman)
       }
     }
   }

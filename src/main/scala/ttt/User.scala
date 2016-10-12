@@ -1,14 +1,11 @@
 package ttt
 
-import scala.io.StdIn.readLine
-
-object Prompt {
-  def prompt(message: String): String = {
-    readLine(message)
-  }
+object User {
+  val marker = Board.firstPlayer
+  val role = 'human
 
   def getSpot(board: List[Symbol], message: String): Int = {
-    val input = prompt(message).trim
+    val input = View.prompt(message).trim
 
     def isNumber: Boolean = input.matches("^\\d*$")
 
@@ -17,8 +14,8 @@ object Prompt {
     def isEmptyStr: Boolean = input == ""
 
     if (!isEmptyStr &&
-        isNumber &&
-        Validation.isValidMove(board, inputToNumber()))
+      isNumber &&
+      Validation.isValidMove(board, inputToNumber()))
       inputToNumber()
     else getSpot(board, Messenger.invalidMove)
   }
