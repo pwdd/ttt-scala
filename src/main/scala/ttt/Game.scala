@@ -2,17 +2,17 @@ package ttt
 
 object Game {
   def gameLoop(board: List[Symbol], currentPlayer: Player, opponent: Player): Unit = {
-    val spot = currentPlayer.getSpot(board, Messenger.chooseANumber)
+    val spot = currentPlayer.getSpot(board, Messenger.chooseANumber, currentPlayer.marker, opponent.marker, 0)
     val newBoard = Board.move(board, currentPlayer.marker, spot)
 
     def finalMsg(board: List[Symbol]): Unit = board match {
-      case b if Rules.isDraw(b) => println(Messenger.draw(b))
-      case _ => println(Messenger.winner(Rules.winner(board), Rules.winCombo(board)))
+      case b if EvalGame.isDraw(b) => View.printMessage(Messenger.draw(b))
+      case _ => View.printMessage(Messenger.win(EvalGame.winnerMarker(board), EvalGame.winCombo(board)))
     }
 
-    if (Rules.gameOver(newBoard)) {
-      View.printMessage(Messenger.strBoard(board))
+    if (EvalGame.gameOver(newBoard)) {
       finalMsg(newBoard)
+      View.printMessage(Messenger.strBoard(newBoard))
     } else {
       View.printMessage(Messenger.currentPlayerIs(opponent.marker))
       View.printMessage(Messenger.strBoard(newBoard))
@@ -21,15 +21,17 @@ object Game {
   }
 
   def play(): Unit = {
-    val board = Board.newBoard(Board.boardLength)
+    val board = Board.newBoard(Board.length)
 
-    def initialMsg() = {
-      View.printMessage("Starting the game...")
-      View.printMessage(Messenger.currentPlayerIs(Board.firstPlayer))
-      View.printMessage(Messenger.strBoard(board))
-    }
+    View.printMessage("Starting the game...")
 
-    initialMsg()
-    gameLoop(board, new Player(Board.firstPlayer, 'human), new Player(Board.secondPlayer, 'human))
+    val choice = Prompt.getGameType(Messenger.chooseGameType)
+    val opponent = if (choice == "1") new User(Board.secondPlayer) else new Computer(Board.secondPlayer)
+
+    View.printMessage(Messenger.currentPlayerIs(Board.firstPlayer))
+    View.printMessage(Messenger.strBoard(board))
+
+
+    gameLoop(board, new User(Board.firstPlayer), opponent)
   }
 }

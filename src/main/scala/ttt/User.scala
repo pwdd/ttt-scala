@@ -1,11 +1,13 @@
 package ttt
 
-object User {
-  val marker = Board.firstPlayer
-  val role = 'human
+class User(val marker: Symbol) extends Player {
 
-  def getSpot(board: List[Symbol], message: String): Int = {
-    val input = View.prompt(message).trim
+  def getSpot(board: List[Symbol],
+              message: String,
+              currentPlayerMarker: Symbol = '_,
+              opponentMarker: Symbol = '_,
+              depth: Int = 0): Int = {
+    val input = Prompt.prompt(message)
 
     def isNumber: Boolean = input.matches("^\\d*$")
 

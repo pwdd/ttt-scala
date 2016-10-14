@@ -10,23 +10,20 @@ class UserSuite extends FunSuite {
   val e = Board.emptySpot
   val x = Board.firstPlayer
   val o = Board.secondPlayer
+  val user = new User(x)
 
   def mock(board: List[Symbol], input: String, expected: Int) = {
     val in = new ByteArrayInputStream(input.getBytes())
 
     Console.withOut(stream) {
       Console.withIn(in) {
-        assert(User.getSpot(board, "foo") === expected)
+        assert(user.getSpot(board, "foo") === expected)
       }
     }
   }
 
-  test("User: implements 'marker' from 'Player' trait") {
-    assert(User.marker.isInstanceOf[Symbol])
-  }
-
-  test("User: implements 'role' from 'Player' trait") {
-    assert(User.role.isInstanceOf[Symbol])
+  test("User: implements extends 'Player'") {
+    assert(user.isInstanceOf[Player])
   }
 
   test("getSpot: returns index if input - 1 is in range") {

@@ -12,17 +12,16 @@ object Negamax {
   def score(board: List[Symbol], currentPlayerMarker: Symbol, opponentMarker: Symbol, depth: Int): Int = {
 
     def boardAnalysis(): Int = {
-      val winner = if (Rules.gameOver(board) && !Rules.isDraw(board)) Rules.winner(board)
-      else Board.emptySpot
+      val winner = EvalGame.winnerMarker(board)
 
       winner match {
-        case cp if winner == currentPlayerMarker => 100 - depth
-        case o if winner == opponentMarker => depth - 100
+        case cp if winner == currentPlayerMarker => baseDepth - depth
+        case o if winner == opponentMarker => depth - baseDepth
         case _ => 0
       }
     }
 
-    if (Rules.gameOver(board)) {
+    if (EvalGame.gameOver(board)) {
       boardAnalysis()
     } else {
       scores(board, currentPlayerMarker, opponentMarker, depth).max
@@ -30,7 +29,7 @@ object Negamax {
   }
 
   def bestMove(board: List[Symbol], currentPlayerMarker: Symbol, opponentMarker: Symbol, depth: Int = 0): Int = {
-    if (Board.isBoardEmpty(board)) {
+    if (Board.isEmpty(board)) {
       4
     } else {
       val spots = Board.availableSpots(board)

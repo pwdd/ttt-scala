@@ -5,8 +5,8 @@ object Board {
   val firstPlayer = 'x
   val secondPlayer = 'o
 
-  val boardSize = 3
-  val boardLength = boardSize * boardSize
+  val size = 3
+  val length = size * size
 
   def newBoard(length: Int): List[Symbol] = List.fill(length)(emptySpot)
 
@@ -14,9 +14,9 @@ object Board {
     board.updated(spot, marker)
   }
 
-  def isBoardFull(board: List[Symbol]): Boolean = !board.contains(emptySpot)
+  def isFull(board: List[Symbol]): Boolean = !board.contains(emptySpot)
 
-  def isBoardEmpty(board: List[Symbol]): Boolean = board == newBoard(boardLength)
+  def isEmpty(board: List[Symbol]): Boolean = board == newBoard(length)
 
   def isSpotAvailable(board: List[Symbol], spot: Int): Boolean = board(spot) == emptySpot
 

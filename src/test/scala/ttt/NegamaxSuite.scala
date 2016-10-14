@@ -29,7 +29,7 @@ class NegamaxSuite extends FunSuite {
   }
 
   test("bestMove: places marker in the middle if board is empty") {
-    assert(Negamax.bestMove(Board.newBoard(Board.boardLength), o, x) === 4)
+    assert(Negamax.bestMove(Board.newBoard(Board.length), o, x) === 4)
   }
 
   test("bestMove: blocks opponent from winning") {
