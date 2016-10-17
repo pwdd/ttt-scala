@@ -1,14 +1,14 @@
 package ttt
 
-object Rules {
+object EvalGame {
   val winCombos = List(List(0, 1, 2),
-    List(3, 4, 5),
-    List(6, 7, 8),
-    List(0, 3, 6),
-    List(1, 4, 7),
-    List(2, 5, 8),
-    List(0, 4, 8),
-    List(2, 4, 6))
+                       List(3, 4, 5),
+                       List(6, 7, 8),
+                       List(0, 3, 6),
+                       List(1, 4, 7),
+                       List(2, 5, 8),
+                       List(0, 4, 8),
+                       List(2, 4, 6))
 
   def winCombo(board: List[Symbol]): List[Int] = {
 
@@ -25,11 +25,15 @@ object Rules {
     else winCombos(winAt)
   }
 
-  def isDraw(board: List[Symbol]): Boolean = Board.isBoardFull(board) && winCombo(board).isEmpty
+  def isDraw(board: List[Symbol]): Boolean = Board.isFull(board) && winCombo(board).isEmpty
 
   def gameOver(board: List[Symbol]): Boolean = isDraw(board) || winCombo(board).nonEmpty
 
-  def winner(board: List[Symbol]) = {
-    board(winCombo(board).head)
+  def winnerMarker(board: List[Symbol]) = {
+    try {
+      board(winCombo(board).head)
+    } catch {
+      case e: NoSuchElementException => Board.emptySpot
+    }
   }
 }

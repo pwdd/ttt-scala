@@ -8,7 +8,7 @@ object Messenger {
 
   def draw(board: List[Symbol]): String = "The game tied!\n"
 
-  def winner(winner: Symbol, position: List[Int]): String = {
+  def win(winner: Symbol, position: List[Int]): String = {
     val indexToUserFriendlyNumbers = position.map(_ + 1)
     val posToStr = indexToUserFriendlyNumbers.mkString(", ")
 
@@ -25,10 +25,18 @@ object Messenger {
     }
 
     def buildStrBoard(board: List[String]): Any = {
-      val breakLines = board.grouped(Board.boardSize).toList.map(_.mkString(pipe))
+      val breakLines = board.grouped(Board.size).toList.map(_.mkString(pipe))
       breakLines.mkString(separator)
     }
 
     "\n" + buildStrBoard(board.map(symbolToStr)).toString + "\n"
   }
+
+  val chooseGameType =
+    "What kind of game would you like to play?\n\n" +
+      "1. Human vs Human\n" +
+      "2. Human vs Unbeatable Computer\n\n" +
+      "Please enter the correspondent number: "
+
+  val invalidGameType = "There is no such a game. " + chooseGameType
 }

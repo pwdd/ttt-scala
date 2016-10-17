@@ -1,31 +1,37 @@
 package ttt
 
 object Game {
-  def gameLoop(board: List[Symbol], currentPlayer: Symbol, opponent: Symbol): Unit = {
-    val spot = Prompt.getSpot(board, Messenger.chooseANumber)
-    val newBoard = Board.move(board, currentPlayer, spot)
+  def gameLoop(board: List[Symbol], currentPlayer: Player, opponent: Player): Unit = {
+    val spot = currentPlayer.getSpot(board, Messenger.chooseANumber, currentPlayer.marker, opponent.marker, 0)
+    val newBoard = Board.move(board, currentPlayer.marker, spot)
 
-    View.printMessage(Messenger.currentPlayerIs(opponent))
-    View.printMessage(Messenger.strBoard(newBoard))
+    def finalMsg(board: List[Symbol]): Unit = board match {
+      case b if EvalGame.isDraw(b) => View.printMessage(Messenger.draw(b))
+      case _ => View.printMessage(Messenger.win(EvalGame.winnerMarker(board), EvalGame.winCombo(board)))
+    }
 
-    if (Rules.gameOver(newBoard)) {
-      if (Rules.isDraw(newBoard)) println(Messenger.draw(newBoard))
-      else println(Messenger.winner(Rules.winner(newBoard), Rules.winCombo(newBoard)))
+    if (EvalGame.gameOver(newBoard)) {
+      finalMsg(newBoard)
+      View.printMessage(Messenger.strBoard(newBoard))
     } else {
+      View.printMessage(Messenger.currentPlayerIs(opponent.marker))
+      View.printMessage(Messenger.strBoard(newBoard))
       gameLoop(newBoard, opponent, currentPlayer)
     }
   }
 
   def play(): Unit = {
-    val board = Board.newBoard(Board.boardLength)
+    val board = Board.newBoard(Board.length)
 
-    def initialMsg() = {
-      View.printMessage("Starting the game...")
-      View.printMessage(Messenger.currentPlayerIs(Board.firstPlayer))
-      View.printMessage(Messenger.strBoard(board))
-    }
+    View.printMessage("Starting the game...")
 
-    initialMsg()
-    gameLoop(board, Board.firstPlayer, Board.secondPlayer)
+    val choice = Prompt.getGameType(Messenger.chooseGameType)
+    val opponent = if (choice == "1") new User(Board.secondPlayer) else new Computer(Board.secondPlayer)
+
+    View.printMessage(Messenger.currentPlayerIs(Board.firstPlayer))
+    View.printMessage(Messenger.strBoard(board))
+
+
+    gameLoop(board, new User(Board.firstPlayer), opponent)
   }
 }

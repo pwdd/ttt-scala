@@ -2,18 +2,18 @@ package ttt
 
 import org.scalatest.FunSuite
 
-class BoardSuite extends FunSuite{
+class BoardSuite extends FunSuite {
   val length = 9
   val emptyBoard = Board.newBoard(length)
   val e = Board.emptySpot
   val x = Board.firstPlayer
   val o = Board.secondPlayer
 
-  test("newBoard: creates an List that contains only emptySpots") {
+  test("newBoard: creates a List that contains only emptySpots") {
     assert(emptyBoard.filterNot(_ == e) === List())
   }
 
-  test("newBoard: creates an List with that has length equal to length parameter") {
+  test("newBoard: creates a List that has length equal to parameter") {
     assert(emptyBoard.length == 9)
   }
 
@@ -34,24 +34,24 @@ class BoardSuite extends FunSuite{
                   e, e, e))
   }
 
-  test("isBoardFull: returns false if board has only emptySpots") {
-    assert(!Board.isBoardFull(emptyBoard))
+  test("isFull: returns false if board has only emptySpots") {
+    assert(!Board.isFull(emptyBoard))
   }
 
-  test("isBoardFull: returns false if there is any emptySpot") {
-    assert(!Board.isBoardFull(List(x, x, o,
-                                   e, x, o,
-                                   x, o, x)))
+  test("isFull: returns false if there is any emptySpot") {
+    assert(!Board.isFull(List(x, x, o,
+                              e, x, o,
+                              x, o, x)))
   }
 
-  test("isBoardEmpty: returns true if it is new board") {
-    assert(Board.isBoardEmpty(emptyBoard))
+  test("isEmpty: returns true if it is new board") {
+    assert(Board.isEmpty(emptyBoard))
   }
 
-  test("isBoardEmpty: returns false if there is any marker on board") {
-    assert(!Board.isBoardEmpty(List(e, e, e,
-                                    x, e, e,
-                                    e, e, e)))
+  test("isEmpty: returns false if there is any marker on board") {
+    assert(!Board.isEmpty(List(e, e, e,
+                               x, e, e,
+                               e, e, e)))
   }
 
   test("isSpotAvailable: returns true if spot has an emptySpot") {
@@ -61,16 +61,25 @@ class BoardSuite extends FunSuite{
   test("isSpotAvailable: returns false if spot has a marker") {
     assert(!Board.isSpotAvailable(List(x, e, e,
                                        e, e, e,
-                                       e, e, e), 0))
+                                       e, e, e),
+                                  0))
   }
 
   test("availableSpots: returns the all the indexes of board if board is empty") {
     assert(Board.availableSpots(emptyBoard) === List.range(0, length))
   }
 
+  test("availableSpots: returns an empty List if board is full") {
+    assert(Board.availableSpots(List(x, x, x,
+                                     o, o, x,
+                                     o, o, x)) ===
+                                List())
+  }
+
   test("availableSpots: returns a List with the indexes that have emptySpots") {
     assert(Board.availableSpots(List(x, x, e,
                                      o, o, e,
-                                     e, x, o)) === List(2, 5, 6))
+                                     e, x, o)) ===
+                                List(2, 5, 6))
   }
 }
