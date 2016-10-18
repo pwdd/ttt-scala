@@ -1,7 +1,11 @@
 package ttt
 
+import scala.util.control.Breaks.break
+
 object Negamax {
   val baseDepth = 100
+  val maxDepth = 6
+  var bestIndex = -1
 
   def scores(board: List[Symbol], currentPlayerMarker: Symbol, opponentMarker: Symbol, depth: Int): List[Int] = {
     val spots = Board.availableSpots(board)
@@ -9,7 +13,14 @@ object Negamax {
     newBoards.map(- score(_, opponentMarker, currentPlayerMarker, depth + 1))
   }
 
-  def score(board: List[Symbol], currentPlayerMarker: Symbol, opponentMarker: Symbol, depth: Int): Int = {
+  def score(board: List[Symbol],
+            currentPlayerMarker: Symbol,
+            opponentMarker: Symbol,
+            depth: Int,
+            alpha: Int = -100000,
+            beta: Int = 100000): Int = {
+
+    var maxScore = -100000
 
     def boardAnalysis(): Int = {
       val winner = EvalGame.winnerMarker(board)
@@ -24,7 +35,23 @@ object Negamax {
     if (EvalGame.gameOver(board)) {
       boardAnalysis()
     } else {
-      scores(board, currentPlayerMarker, opponentMarker, depth).max
+      var alphaCopy = alpha
+      val availableSpots = Board.availableSpots(board)
+
+      availableSpots.foreach { spot =>
+        val newBoard = Board.move(board, currentPlayerMarker, spot)
+        val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alpha)
+        if (negamaxScore > maxScore) {
+          maxScore = negamaxScore
+          if (depth == 0) bestIndex = spot
+        }
+        alphaCopy = Math.max(maxScore, alphaCopy)
+        if (alphaCopy >= beta) {
+          println("break!")
+          break()
+        }
+      }
+      alphaCopy
     }
   }
 
@@ -32,11 +59,8 @@ object Negamax {
     if (Board.isEmpty(board)) {
       4
     } else {
-      val spots = Board.availableSpots(board)
-      val scoresList = scores(board, currentPlayerMarker, opponentMarker, depth)
-      val maxValue = scoresList.max
-      val best = scoresList.indexOf(maxValue)
-      spots(best)
+      score(board, currentPlayerMarker, opponentMarker, depth)
+      bestIndex
     }
   }
 }
