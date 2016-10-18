@@ -7,14 +7,40 @@ class MessengerSuite extends FunSuite {
   val o = Board.secondPlayer
   val e = Board.emptySpot
 
-  test("printBoard: returns a string version of the board") {
+  test("printBoard: returns a string version of a 3x3 board") {
     val separator = "\n---|---|---\n"
-    assert(Messenger.strBoard(List(x, o, x, o, x, o, x, o, x))  === "\n" +
-                                                                    " x | o | x " +
-                                                                      separator +
-                                                                    " o | x | o " +
-                                                                      separator +
-                                                                    " x | o | x " +
-                                                                    "\n")
+    assert(Messenger.strBoard(List(
+      x, o, x,
+      o, x, o,
+      x, o, x))  ===
+
+      "\n" +
+        " x | o | x " +
+        separator +
+        " o | x | o " +
+        separator +
+        " x | o | x " +
+        "\n")
+  }
+
+  test("printBoard: returns a string version of a 4x4 board") {
+    val separator = "\n---|---|---|---\n"
+    assert(Messenger.strBoard(List(
+      x, o, x, o,
+      x, o, x, o,
+      o, x, o, x,
+      o, x, o, x
+    )) ===
+
+    "\n" +
+      " x | o | x | o " +
+      separator +
+      " x | o | x | o " +
+      separator +
+      " o | x | o | x " +
+      separator +
+      " o | x | o | x " +
+      "\n"
+    )
   }
 }

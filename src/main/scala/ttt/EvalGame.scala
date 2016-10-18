@@ -1,14 +1,14 @@
 package ttt
 
 object EvalGame {
-  val winCombos = List(List(0, 1, 2),
-                       List(3, 4, 5),
-                       List(6, 7, 8),
-                       List(0, 3, 6),
-                       List(1, 4, 7),
-                       List(2, 5, 8),
-                       List(0, 4, 8),
-                       List(2, 4, 6))
+  def winCombos(size: Int) = {
+    val indexes = Board.indexes(size * size)
+    val rows = Board.rows(indexes, size)
+    val columns = ttt.Board.columns(rows)
+    val diagonals = ttt.Board.diagonals(rows, size)
+
+    List(rows, columns, diagonals).flatten
+  }
 
   def winCombo(board: List[Symbol]): List[Int] = {
 
@@ -18,11 +18,12 @@ object EvalGame {
       first != Board.emptySpot && markersOnIndexes.forall(e => e == first)
     }
 
-    val pairs = winCombos.map(hasRepeatedMarkers(board, _)).zipWithIndex
+    val getWinCombos = winCombos(Board.size(board))
+    val pairs = getWinCombos.map(hasRepeatedMarkers(board, _)).zipWithIndex
     val winAt = pairs.indexWhere(_._1)
 
     if (winAt == -1) List()
-    else winCombos(winAt)
+    else getWinCombos(winAt)
   }
 
   def isDraw(board: List[Symbol]): Boolean = Board.isFull(board) && winCombo(board).isEmpty

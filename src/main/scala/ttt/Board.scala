@@ -5,8 +5,8 @@ object Board {
   val firstPlayer = 'x
   val secondPlayer = 'o
 
-  val size = 3
-  val length = size * size
+  def size(board: List[Symbol]): Int = Math.sqrt(board.length).toInt
+  def length(size: Int): Int = size * size
 
   def indexes(length: Int): List[Int] = (0 until length).toList
 
@@ -33,7 +33,7 @@ object Board {
 
   def isFull(board: List[Symbol]): Boolean = !board.contains(emptySpot)
 
-  def isEmpty(board: List[Symbol]): Boolean = board == newBoard(length)
+  def isEmpty(board: List[Symbol]): Boolean = board == newBoard(board.length)
 
   def isSpotAvailable(board: List[Symbol], spot: Int): Boolean = board(spot) == emptySpot
 

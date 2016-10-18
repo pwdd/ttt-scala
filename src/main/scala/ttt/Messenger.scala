@@ -17,7 +17,8 @@ object Messenger {
 
   def strBoard(board: List[Symbol]): String = {
     val pipe = "|"
-    val separator = "\n---|---|---\n"
+    val dashes = "---"
+    val separator = "\n" + List.fill(Board.size(board))(dashes).mkString(pipe) + "\n"
 
     def symbolToStr(marker: Symbol): String = {
       if (marker == Board.emptySpot) "   "
@@ -25,7 +26,7 @@ object Messenger {
     }
 
     def buildStrBoard(board: List[String]): Any = {
-      val breakLines = board.grouped(Board.size).toList.map(_.mkString(pipe))
+      val breakLines = board.grouped(Math.sqrt(board.length).toInt).toList.map(_.mkString(pipe))
       breakLines.mkString(separator)
     }
 

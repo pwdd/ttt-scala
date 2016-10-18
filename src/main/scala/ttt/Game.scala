@@ -21,7 +21,7 @@ object Game {
   }
 
   def play(): Unit = {
-    val board = Board.newBoard(Board.length)
+    val board = Board.newBoard(9)
 
     View.printMessage("Starting the game...")
 
