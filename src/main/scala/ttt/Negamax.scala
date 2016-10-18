@@ -23,7 +23,7 @@ object Negamax {
     var maxScore = -100000
 
     def boardAnalysis(): Int = {
-      val winner = EvalGame.winnerMarker(board)
+      lazy val winner = EvalGame.winnerMarker(board)
 
       winner match {
         case cp if winner == currentPlayerMarker => baseDepth - depth
@@ -40,14 +40,13 @@ object Negamax {
 
       availableSpots.foreach { spot =>
         val newBoard = Board.move(board, currentPlayerMarker, spot)
-        val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alpha)
+        lazy val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alpha)
         if (negamaxScore > maxScore) {
           maxScore = negamaxScore
           if (depth == 0) bestIndex = spot
         }
         alphaCopy = Math.max(maxScore, alphaCopy)
         if (alphaCopy >= beta) {
-          println("break!")
           break()
         }
       }

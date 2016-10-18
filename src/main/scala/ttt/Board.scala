@@ -8,6 +8,23 @@ object Board {
   val size = 3
   val length = size * size
 
+  def indexes(length: Int): List[Int] = (0 until length).toList
+
+  def rows(boardIndexes: List[Int], size: Int): List[List[Int]] = boardIndexes.grouped(size).toList
+
+  def columns(rows: List[List[Int]]): List[List[Int]] = rows.transpose
+
+  def diagonals(rows: List[List[Int]], size: Int): List[List[Int]] = {
+    val forward = (0 until size).toList
+    val backward = forward.reverse
+
+    def makeDiagonal(indexes: List[Int]): List[Int] = {
+      indexes.zipWithIndex.map{ case(el, i) => rows(i)(el) }
+    }
+
+    List(makeDiagonal(forward), makeDiagonal(backward))
+  }
+
   def newBoard(length: Int): List[Symbol] = List.fill(length)(emptySpot)
 
   def move(board: List[Symbol], marker: Symbol, spot: Int): List[Symbol] = {
