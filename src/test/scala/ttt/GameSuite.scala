@@ -45,11 +45,11 @@ class GameSuite extends FunSuite with Matchers {
   }
 
   test("play: does not throw exception when human vs human") {
-    mock("1\n1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'play)
+    mock("1\n3\n1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'play)
   }
 
   test("play: does not throw exception when human vs computer") {
-    mock("2\n1\n2\n4\n", computer, 'play)
+    mock("2\n3\n1\n2\n4\n", computer, 'play)
   }
 }
 

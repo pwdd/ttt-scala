@@ -9,8 +9,13 @@ object Validation {
     isInRange && Board.isSpotAvailable(board, spot)
   }
 
+  private def isValid(validInput: List[String], input: String): Boolean = validInput.contains(input)
+
   def isValidGameType(input: String): Boolean = {
-    val validChoices = List("1", "2")
-    validChoices.contains(input)
+    isValid(List("1", "2"), input)
+  }
+
+  def isValidBoardDimension(input: String): Boolean = {
+    isValid(List("3", "4"), input)
   }
 }

@@ -5,9 +5,9 @@ import scala.io.StdIn._
 object Prompt {
   def prompt(message: String): String = readLine(message).trim
 
-  def getGameType(message: String): String = {
-    val userChoice = prompt(message)
-    if (Validation.isValidGameType(userChoice)) userChoice
-    else getGameType(Messenger.invalidGameType)
+  def getUserChoice(messageAsk: String, messageInvalid: String, validation: (String) => Boolean): String = {
+    val userChoice = prompt(messageAsk)
+    if (validation(userChoice)) userChoice
+    else getUserChoice(messageAsk, messageInvalid, validation)
   }
 }

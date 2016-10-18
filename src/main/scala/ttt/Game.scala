@@ -21,12 +21,21 @@ object Game {
   }
 
   def play(): Unit = {
-    val board = Board.newBoard(9)
-
     View.printMessage("Starting the game...")
 
-    val choice = Prompt.getGameType(Messenger.chooseGameType)
-    val opponent = if (choice == "1") new User(Board.secondPlayer) else new Computer(Board.secondPlayer)
+    val choiceGameType= Prompt.getUserChoice(
+      Messenger.chooseGameType,
+      Messenger.invalidGameType,
+      Validation.isValidGameType)
+
+    val opponent = if (choiceGameType == "1") new User(Board.secondPlayer) else new Computer(Board.secondPlayer)
+
+    val choiceBoardDimension = Prompt.getUserChoice(
+      Messenger.chooseBoardDimension,
+      Messenger.invalidBoardDimension,
+      Validation.isValidBoardDimension)
+
+    val board = Board.newBoard(Board.length(choiceBoardDimension.toInt))
 
     View.printMessage(Messenger.currentPlayerIs(Board.firstPlayer))
     View.printMessage(Messenger.strBoard(board))
