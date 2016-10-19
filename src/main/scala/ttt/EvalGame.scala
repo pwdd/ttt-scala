@@ -30,11 +30,8 @@ object EvalGame {
 
   def gameOver(board: List[Symbol]): Boolean = isDraw(board) || winCombo(board).nonEmpty
 
-  def winnerMarker(board: List[Symbol]) = {
-    try {
-      board(winCombo(board).head)
-    } catch {
-      case e: NoSuchElementException => Board.emptySpot
-    }
+  def winnerMarker(board: List[Symbol]): Option[Symbol] = {
+    val marker = winCombo(board).headOption
+    marker.map(board(_))
   }
 }

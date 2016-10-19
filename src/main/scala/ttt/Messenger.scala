@@ -8,11 +8,14 @@ object Messenger {
 
   def draw(board: List[Symbol]): String = "The game tied!\n"
 
-  def win(winner: Symbol, position: List[Int]): String = {
+  def win(winner: Option[Symbol], position: List[Int]): String = {
     val indexToUserFriendlyNumbers = position.map(_ + 1)
     val posToStr = indexToUserFriendlyNumbers.mkString(", ")
 
-    "Player '" + winner.name + "' won on positions " + posToStr + "\n"
+    winner match {
+      case Some(marker) => "Player '" + marker.name + "' won on positions " + posToStr + "\n"
+      case _ => ""
+    }
   }
 
   def strBoard(board: List[Symbol]): String = {

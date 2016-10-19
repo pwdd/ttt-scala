@@ -27,30 +27,4 @@ class NegamaxSuite extends FunSuite {
                      e, o, e)
     assert(Negamax.score(board, o, x, 0) === -98)
   }
-
-  test("bestMove: places marker in the middle if board is empty") {
-    assert(Negamax.bestMove(Board.newBoard(9), o, x) === 4)
-  }
-
-  test("bestMove: blocks opponent from winning") {
-    val board = List(x, x, e,
-                     o, e, e,
-                     o, e, e)
-    assert(Negamax.bestMove(board, o, x) === 2)
-  }
-
-  test("bestMove: wins when it has the chance") {
-    val board = List(x, x, e,
-                     o, o, e,
-                     e, e, e)
-    assert(Negamax.bestMove(board, o, x) === 5)
-  }
-
-  test("bestMove: avoids fork") {
-    val board = List(o, e, e,
-                     e, x, e,
-                     e, e, x)
-    assert(Negamax.bestMove(board, o, x) === 2 ||
-           Negamax.bestMove(board, o, x) === 6)
-  }
 }

@@ -5,7 +5,8 @@ object Board {
   val firstPlayer = 'x
   val secondPlayer = 'o
 
-  def size(board: List[Symbol]): Int = Math.sqrt(board.length).toInt
+  def size(board: List[Any]): Int = Math.sqrt(board.length).toInt
+
   def length(size: Int): Int = size * size
 
   def indexes(length: Int): List[Int] = (0 until length).toList
@@ -23,6 +24,12 @@ object Board {
     }
 
     List(makeDiagonal(forward), makeDiagonal(backward))
+  }
+
+  def center(length: Int): Int = {
+    val center = length / 2
+    if (length % 2 != 0) center
+    else center - 2
   }
 
   def newBoard(length: Int): List[Symbol] = List.fill(length)(emptySpot)

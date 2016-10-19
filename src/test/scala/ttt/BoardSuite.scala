@@ -119,11 +119,19 @@ class BoardSuite extends FunSuite {
     ))
   }
 
-  test("diagonals") {
+  test("diagonals: is a nested List with indexes of main diagonals") {
     assert(Board.diagonals(rowsThree, 3) === List(List(0, 4, 8), List(2, 4, 6)))
     assert(Board.diagonals(rowsFour, 4) === List(
       List(0, 5, 10, 15),
       List(3, 6, 9, 12)
     ))
+  }
+
+  test("center: returns center spot of a 3x3 board") {
+    assert(Board.center(9) === 4)
+  }
+
+  test("center: returns center spot of a 4x4 board ") {
+    assert(Board.center(16) === 6)
   }
 }

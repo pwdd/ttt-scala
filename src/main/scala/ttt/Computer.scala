@@ -7,6 +7,11 @@ class Computer(val marker: Symbol) extends Player {
               opponentMarker: Symbol,
               depth: Int = 0): Int = {
 
-    Negamax.bestMove(board, currentPlayerMarker, opponentMarker, depth)
+    if (Board.isEmpty(board)) {
+      Board.center(board.length)
+    } else {
+      Negamax.score(board, currentPlayerMarker, opponentMarker, depth)
+      Negamax.bestIndex
+    }
   }
 }
