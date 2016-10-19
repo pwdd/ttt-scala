@@ -1,10 +1,11 @@
 package ttt
 
-import scala.util.control.Breaks.break
+import scala.util.control.Breaks._
 
 object Negamax {
   val baseDepth = 100
-  var bestIndex = -1
+  val maxDepth = 7
+  var bestMove = -1
 
   def score(board: List[Symbol],
             currentPlayerMarker: Symbol,
@@ -14,6 +15,10 @@ object Negamax {
             beta: Int = 100000): Int = {
 
     var maxScore = -100000
+
+    def isFinalState() = {
+      EvalGame.gameOver(board) || depth >= maxDepth
+    }
 
     def boardAnalysis(): Int = {
       val winner = EvalGame.winnerMarker(board)
@@ -25,27 +30,29 @@ object Negamax {
       }
     }
 
-    def maxDepth(depth: Int, length: Int): Int = if (depth <= 4 && length > 9) 4 else 6
-
-    if (EvalGame.gameOver(board) || depth >= maxDepth(depth, board.length)) {
+    if (isFinalState()) {
       boardAnalysis()
-    } else {
+    }
+
+    else {
       var alphaCopy = alpha
       val availableSpots = Board.availableSpots(board)
 
-      availableSpots.foreach { spot =>
-        val newBoard = Board.move(board, currentPlayerMarker, spot)
-        val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alpha)
+      breakable {
+        availableSpots.foreach { spot =>
+          val newBoard = Board.move(board, currentPlayerMarker, spot)
+          val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alphaCopy)
 
-        if (negamaxScore > maxScore) {
-          maxScore = negamaxScore
-          if (depth == 0) bestIndex = spot
-        }
+          if (negamaxScore > maxScore) {
+            maxScore = negamaxScore
+            if (depth == 0) bestMove = spot
+          }
 
-        alphaCopy = Math.max(maxScore, alphaCopy)
+          alphaCopy = Math.max(maxScore, alphaCopy)
 
-        if (alphaCopy >= beta) {
-          break()
+          if (alphaCopy >= beta) {
+            break()
+          }
         }
       }
       alphaCopy

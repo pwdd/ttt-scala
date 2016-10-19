@@ -1,6 +1,7 @@
 package ttt
 
 object EvalGame {
+
   def winCombos(size: Int) = {
     val indexes = Board.indexes(size * size)
     val rows = Board.rows(indexes, size)
@@ -18,8 +19,10 @@ object EvalGame {
       first != Board.emptySpot && markersOnIndexes.forall(e => e == first)
     }
 
+    def indexedWinCombos(combos: List[List[Int]]) = combos.map(hasRepeatedMarkers(board, _)).zipWithIndex
+
     val getWinCombos = winCombos(Board.size(board))
-    val pairs = getWinCombos.map(hasRepeatedMarkers(board, _)).zipWithIndex
+    val pairs = indexedWinCombos(getWinCombos)
     val winAt = pairs.indexWhere(_._1)
 
     if (winAt == -1) List()
@@ -49,7 +52,7 @@ object EvalGame {
     }
   }
 
-  def getOpponentMarker(currentPlayerMarker: Symbol): Symbol = {
+  def opponentMarker(currentPlayerMarker: Symbol): Symbol = {
     if (currentPlayerMarker == Board.firstPlayer) Board.secondPlayer
     else Board.firstPlayer
   }

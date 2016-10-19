@@ -135,10 +135,10 @@ class EvalGameSuite extends FunSuite {
   }
 
   test("getOpponentMarker: returns first player if current player is the second") {
-    assert(EvalGame.getOpponentMarker(Board.secondPlayer) === Board.firstPlayer)
+    assert(EvalGame.opponentMarker(Board.secondPlayer) === Board.firstPlayer)
   }
 
   test("getOpponentMarker: returns second player if current player is the first") {
-    assert(EvalGame.getOpponentMarker(Board.firstPlayer) === Board.secondPlayer)
+    assert(EvalGame.opponentMarker(Board.firstPlayer) === Board.secondPlayer)
   }
 }
