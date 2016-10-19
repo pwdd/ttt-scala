@@ -1,24 +1,27 @@
 package ttt
 
 class User(val marker: Symbol) extends Player {
+  val messenger = Messenger
 
-  def getSpot(board: List[Symbol],
-              message: String,
-              currentPlayerMarker: Symbol = '_,
-              opponentMarker: Symbol = '_,
-              depth: Int = 0): Int = {
-    val input = Prompt.prompt(message)
+  private def isNumericString(input: String): Boolean = {
 
     def isNumber: Boolean = input.matches("^\\d*$")
 
-    def inputToNumber(): Int = input.toInt - 1
-
     def isEmptyStr: Boolean = input == ""
 
-    if (!isEmptyStr &&
-      isNumber &&
-      Validation.isValidMove(board, inputToNumber()))
-      inputToNumber()
-    else getSpot(board, Messenger.invalidMove)
+    !isEmptyStr && isNumber
+  }
+
+  def getSpot(board: List[Symbol]): Int = {
+
+    val input = Prompt.getUserChoice(messenger.chooseANumber, messenger.invalidMove, isNumericString)
+
+    def inputToNumber: Int = input.toInt - 1
+
+    if (Validation.isValidMove(board, inputToNumber)) inputToNumber
+    else {
+      View.printMessage(messenger.invalidMove)
+      getSpot(board)
+    }
   }
 }

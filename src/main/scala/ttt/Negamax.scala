@@ -35,7 +35,7 @@ object Negamax {
 
       availableSpots.foreach { spot =>
         val newBoard = Board.move(board, currentPlayerMarker, spot)
-        lazy val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alpha)
+        val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alpha)
 
         if (negamaxScore > maxScore) {
           maxScore = negamaxScore

@@ -48,8 +48,16 @@ class GameSuite extends FunSuite with Matchers {
     mock("1\n3\n1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'play)
   }
 
-  test("play: does not throw exception when human vs computer") {
+  test("play: does not throw exception when human vs computer in a 3x3 board") {
     mock("2\n3\n1\n2\n4\n", computer, 'play)
+  }
+
+  test("play: does not throw exception when human vs computer in a 4x4 board") {
+    mock("2\n4\n1\n3\n5\n7\n9\n11\n12\n16", computer, 'play)
+  }
+
+  test("play: does not throw exception when user enters invalid board size") {
+    mock("1\n1\na\n3\n1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'play)
   }
 }
 

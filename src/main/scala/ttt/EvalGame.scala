@@ -34,4 +34,23 @@ object EvalGame {
     val marker = winCombo(board).headOption
     marker.map(board(_))
   }
+
+  def currentPlayerMarker(board: List[Symbol]): Symbol = {
+
+    def countMarker(marker: Symbol): Int = board.count(_ == marker)
+
+    val countX = countMarker(Board.firstPlayer)
+    val countO = countMarker(Board.secondPlayer)
+
+    countX match {
+      case equal if countX == countO => Board.firstPlayer
+      case more if countX > countO => Board.secondPlayer
+      case _ => Board.firstPlayer
+    }
+  }
+
+  def getOpponentMarker(currentPlayerMarker: Symbol): Symbol = {
+    if (currentPlayerMarker == Board.firstPlayer) Board.secondPlayer
+    else Board.firstPlayer
+  }
 }

@@ -8,23 +8,26 @@ class NegamaxSuite extends FunSuite {
   val o = Board.secondPlayer
 
   test("score: returns 0 if game will end in a tie") {
-    val board = List(o, o, x,
-                     x, x, e,
-                     o, o, x)
+    val board = List(
+      o, o, x,
+      x, x, e,
+      o, o, x)
     assert(Negamax.score(board, o, x, 2) === 0)
   }
 
   test("score: returns 99 if current player will win") {
-    val board = List(o, o, e,
-                     x, x, o,
-                     x, o, x)
+    val board = List(
+      o, o, e,
+      x, x, o,
+      x, o, x)
     assert(Negamax.score(board, o, x, 0) === 99)
   }
 
   test("score: returns -98 if current player will win") {
-    val board = List(x, o, x,
-                     x, x, o,
-                     e, o, e)
+    val board = List(
+      x, o, x,
+      x, x, o,
+      e, o, e)
     assert(Negamax.score(board, o, x, 0) === -98)
   }
 }

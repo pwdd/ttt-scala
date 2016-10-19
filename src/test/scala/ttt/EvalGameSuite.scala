@@ -102,4 +102,43 @@ class EvalGameSuite extends FunSuite {
   test("winnerMarker: returns None if there is no winner") {
     assert(EvalGame.winnerMarker(Board.newBoard(9)) === None)
   }
+
+  test("currentPlayerMarker: returns first player if board is empty") {
+    assert(EvalGame.currentPlayerMarker(Board.newBoard(9)) === x)
+  }
+
+  test("currentPlayerMarker: returns first player if board has even number of moves") {
+    val board = List(
+      x, o, e,
+      e, e, e,
+      e, e, e
+    )
+    assert(EvalGame.currentPlayerMarker(board) === x)
+  }
+
+  test("currentPlayerMarker: returns second player if it has made less moves") {
+    val board = List(
+      x, o, x,
+      e, e, e,
+      e, e, e
+    )
+    assert(EvalGame.currentPlayerMarker(board) === o)
+  }
+
+  test("currentPlayerMarker: returns first player if it has made less moves") {
+    val board = List(
+      x, o, x,
+      o, o, e,
+      e, e, e
+    )
+    assert(EvalGame.currentPlayerMarker(board) === x)
+  }
+
+  test("getOpponentMarker: returns first player if current player is the second") {
+    assert(EvalGame.getOpponentMarker(Board.secondPlayer) === Board.firstPlayer)
+  }
+
+  test("getOpponentMarker: returns second player if current player is the first") {
+    assert(EvalGame.getOpponentMarker(Board.firstPlayer) === Board.secondPlayer)
+  }
 }

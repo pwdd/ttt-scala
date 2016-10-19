@@ -17,7 +17,7 @@ class UserSuite extends FunSuite {
 
     Console.withOut(stream) {
       Console.withIn(in) {
-        assert(user.getSpot(board, "foo") === expected)
+        assert(user.getSpot(board) === expected)
       }
     }
   }
@@ -39,9 +39,10 @@ class UserSuite extends FunSuite {
   }
 
   test("getSpot: recurs if input - 1 is index of a non emptySpot") {
-    val board = List(x, x, o,
-                     e, e, e,
-                     e, e, e)
+    val board = List(
+      x, x, o,
+      e, e, e,
+      e, e, e)
     mock(board, "1\n4", 3)
   }
 }

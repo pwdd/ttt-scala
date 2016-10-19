@@ -2,7 +2,7 @@ package ttt
 
 object Game {
   def gameLoop(board: List[Symbol], currentPlayer: Player, opponent: Player): Unit = {
-    val spot = currentPlayer.getSpot(board, Messenger.chooseANumber, currentPlayer.marker, opponent.marker, 0)
+    val spot = currentPlayer.getSpot(board)
     val newBoard = Board.move(board, currentPlayer.marker, spot)
 
     def finalMsg(board: List[Symbol]): Unit = board match {
