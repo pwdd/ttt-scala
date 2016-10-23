@@ -21,12 +21,12 @@ class GameSuite extends FunSuite with Matchers {
 
     Console.withOut(stream) {
       Console.withIn(in) {
-        noException should be thrownBy methodRun
+        noException should be thrownBy methodRun()
       }
     }
 
-    def methodRun = {
-      if (method == 'loop) Game.gameLoop(board, firstHuman, secondPlayer)
+    def methodRun() = {
+      if (method == 'loop) Game.gameLoop(board, firstHuman, secondPlayer, messenger)
       else Game.play()
     }
   }
@@ -73,4 +73,7 @@ class GameSuite extends FunSuite with Matchers {
     mock("a\n" + language + againstComputer + threeByTree + "1\n3\n5\n7\n9\n11\n12\n16", computer, 'play)
   }
 }
+
+
+
 
