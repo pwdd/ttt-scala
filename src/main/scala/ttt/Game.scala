@@ -5,15 +5,19 @@ import ttt.Messenger._
 object Game {
   val validGameTypes = Map('humanXHuman -> "1", 'humanXComputer -> "2")
   val validBoardDimensions = Map('threeByThree -> "3", 'fourByFour -> "4")
-  val validLanguages = Map('english -> "1", 'spanish -> "2")
+  val validLanguages = Map('english -> "1", 'spanish -> "2", 'portuguese -> "3")
 
   private def chosenLanguage = {
     val choice = Prompt.getUserChoice(
-      "\nEnter 1 for English | Introduzca 2 para Español: ",
-      "Not valid | No es válido",
-      Validation.isValidGameType)
+      "\nEnter 1 for English | Introduzca 2 para Español | Digite 3 para Português: ",
+      "Not valid | No es válido | Não é um número válido",
+      Validation.isValidLanguage)
 
-    if (choice == validLanguages('english)) new English else new Spanish
+    choice match {
+      case spanish if choice == validLanguages('spanish) => new Spanish
+      case portuguese if choice == validLanguages('portuguese) => new Portuguese
+      case _ => new English
+    }
   }
 
   def gameLoop(board: List[Symbol], currentPlayer: Player, opponent: Player, messenger: Messenger): Unit = {

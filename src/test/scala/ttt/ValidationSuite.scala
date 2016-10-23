@@ -27,4 +27,25 @@ class ValidationSuite extends  FunSuite {
   test("isValidMove: returns true if arg is a spot with an emptySpot") {
     assert(Validation.isValidMove(emptyBoard, 0))
   }
+
+  test("isValidBoardDimension: returns true if arg is a value in 'Game.validBoardDimension' map") {
+    assert(Validation.isValidBoardDimension("3"))
+    assert(Validation.isValidBoardDimension("4"))
+  }
+
+  test("isValidBoardDimension: returns false if arg is not a value in 'Game.validBoardDimension' map") {
+    assert(!Validation.isValidBoardDimension("a"))
+    assert(!Validation.isValidBoardDimension("0"))
+  }
+
+  test("isValidLanguage: returns true if arg is a value in 'Game.validLanguages' map") {
+    assert(Validation.isValidLanguage("1"))
+    assert(Validation.isValidLanguage("2"))
+    assert(Validation.isValidLanguage("3"))
+  }
+
+  test("isValidLanguage: returns false if arg is not a value in 'Game.validLanguages' map") {
+    assert(!Validation.isValidLanguage("0"))
+    assert(!Validation.isValidLanguage("a"))
+  }
 }
