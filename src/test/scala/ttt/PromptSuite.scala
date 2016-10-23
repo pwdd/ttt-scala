@@ -16,18 +16,18 @@ class PromptSuite extends FunSuite {
     }
   }
 
-  test("getUserChoice: returns the user choice if input is valid") {
-    mock("1\n", "1", Validation.isValidGameType)
-    mock("  2  \n", "2", Validation.isValidGameType)
-    mock("3    \n", "3", Validation.isValidBoardDimension)
-    mock("4\n", "4", Validation.isValidBoardDimension)
-  }
-
-  test("getUserChoice: recurs if input is invalid") {
-    mock("a\n3\n\n1\n", "1", Validation.isValidGameType)
-    mock("33\n  2  \n", "2", Validation.isValidGameType)
-    mock("1\n3    \n", "3", Validation.isValidBoardDimension)
-    mock("abc\n4\n", "4", Validation.isValidBoardDimension)
-  }
+//  test("getUserChoice: returns the user choice if input is valid") {
+//    mock("1\n", "1", Validation.isValidGameType)
+//    mock("  2  \n", "2", Validation.isValidGameType)
+//    mock("3    \n", "3", Validation.isValidBoardDimension)
+//    mock("4\n", "4", Validation.isValidBoardDimension)
+//  }
+//
+//  test("getUserChoice: recurs if input is invalid") {
+//    mock("a\n3\n\n1\n", "1", Validation.isValidGameType)
+//    mock("33\n  2  \n", "2", Validation.isValidGameType)
+//    mock("1\n3    \n", "3", Validation.isValidBoardDimension)
+//    mock("abc\n4\n", "4", Validation.isValidBoardDimension)
+//  }
 
 }

@@ -1,6 +1,6 @@
 package ttt
 
-import scala.util.control.Breaks._
+import scala.util.control.Breaks.{break, breakable}
 
 object Negamax {
   val baseDepth = 100
@@ -11,10 +11,10 @@ object Negamax {
             currentPlayerMarker: Symbol,
             opponentMarker: Symbol,
             depth: Int,
-            alpha: Int = -100000,
-            beta: Int = 100000): Int = {
+            alpha: Double = Double.NegativeInfinity,
+            beta: Double = Double.PositiveInfinity): Double = {
 
-    var maxScore = -100000
+    var maxScore = Double.NegativeInfinity
 
     def isFinalState() = {
       EvalGame.gameOver(board) || depth >= maxDepth

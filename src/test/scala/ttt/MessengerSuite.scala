@@ -6,10 +6,11 @@ class MessengerSuite extends FunSuite {
   val x = Board.firstPlayer
   val o = Board.secondPlayer
   val e = Board.emptySpot
+  val messenger = new ttt.Messenger.English
 
   test("printBoard: returns a string version of a 3x3 board") {
     val separator = "\n---|---|---\n"
-    assert(Messenger.strBoard(List(
+    assert(messenger.strBoard(List(
       x, o, x,
       o, x, o,
       x, o, x))  ===
@@ -25,7 +26,7 @@ class MessengerSuite extends FunSuite {
 
   test("printBoard: returns a string version of a 4x4 board") {
     val separator = "\n---|---|---|---\n"
-    assert(Messenger.strBoard(List(
+    assert(messenger.strBoard(List(
       x, o, x, o,
       x, o, x, o,
       o, x, o, x,
