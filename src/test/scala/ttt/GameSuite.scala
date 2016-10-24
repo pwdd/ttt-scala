@@ -15,65 +15,37 @@ class GameSuite extends FunSuite with Matchers {
   val threeByTree = "3\n"
   val fourByFour = "4\n"
 
-  def mock(input: String, secondPlayer: Player, method: Symbol) = {
+  def mock(input: String, secondPlayer: Player) = {
+    lazy val game = new Game(new ttt.Messenger.English)
     lazy val stream = new ByteArrayOutputStream()
     lazy val in = new ByteArrayInputStream(input.getBytes())
+
+    def methodRun() = game.gameLoop(board, firstHuman, secondPlayer, messenger)
 
     Console.withOut(stream) {
       Console.withIn(in) {
         noException should be thrownBy methodRun()
       }
     }
-
-    def methodRun() = {
-      if (method == 'loop) Game.gameLoop(board, firstHuman, secondPlayer, messenger)
-      else Game.play()
-    }
   }
 
   test("gameLoop: does not throw exception when players enter only valid input") {
-    mock(language + "1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'loop)
+    mock(language + "1\n2\n3\n4\n5\n6\n7\n", secondHuman)
   }
 
   test("gameLoop: does not throw exception when there is a winner") {
-    mock(language + "1\n4\n2\n5\n3\n", secondHuman, 'loop)
+    mock(language + "1\n4\n2\n5\n3\n", secondHuman)
   }
 
   test("gameLoop: does not throw exception when there is no winner") {
-    mock(language + "1\n2\n3\n5\n8\n4\n6\n9\n7\n", secondHuman, 'loop)
+    mock(language + "1\n2\n3\n5\n8\n4\n6\n9\n7\n", secondHuman)
   }
 
   test("gameLoop: does not throw exception when players enter invalid input") {
-    mock(language + "1\n1\n2\na\n\n3\n4\n5\n6\n7\n", secondHuman, 'loop)
+    mock(language + "1\n1\n2\na\n\n3\n4\n5\n6\n7\n", secondHuman)
   }
 
   test("gameLoop: does not throw exception when game is against computer") {
-    mock(language + "1\n2\n4\n", computer, 'loop)
-  }
-
-  test("play: does not throw exception when human vs human") {
-    mock(language + againstHuman + threeByTree + "1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'play)
-  }
-
-  test("play: does not throw exception when human vs computer in a 3x3 board") {
-    mock(language + againstComputer + threeByTree + "1\n2\n4\n", computer, 'play)
-  }
-
-  test("play: does not throw exception when human vs computer in a 4x4 board") {
-    mock(language + againstComputer + fourByFour + "1\n3\n5\n7\n9\n11\n12\n16", computer, 'play)
-  }
-
-  test("play: does not throw exception when user enters invalid board size") {
-    mock(language + againstHuman + "0\n" + threeByTree + "1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'play)
-    mock(language + againstComputer + "a\n" + threeByTree + "1\n3\n5\n7\n9\n11\n12\n16", computer, 'play)
-  }
-
-  test("play: does not throw exception when user enters invalid language") {
-    mock("0\n" + language + againstHuman + threeByTree + "1\n2\n3\n4\n5\n6\n7\n", secondHuman, 'play)
-    mock("a\n" + language + againstComputer + threeByTree + "1\n3\n5\n7\n9\n11\n12\n16", computer, 'play)
+    mock(language + "1\n2\n4\n", computer)
   }
 }
-
-
-
-

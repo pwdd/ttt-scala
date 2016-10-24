@@ -7,8 +7,10 @@ class English extends Messenger {
 
   val chooseGameType =
     "What kind of game would you like to play?\n\n" +
-      "1. Human vs Human\n" +
-      "2. Human vs Unbeatable Computer\n\n" +
+      ttt.Validation.validGameTypes('humanXHuman) +
+      ". Human vs Human\n" +
+      ttt.Validation.validGameTypes('humanXComputer) +
+       ". Human vs Unbeatable Computer\n\n" +
       "Please enter the correspondent number: "
 
   val invalidGameType = "\nThere is no such a game. \n"
@@ -17,7 +19,8 @@ class English extends Messenger {
     "Choose the dimension of the board:\n\n" +
       "3 x 3\n" +
       "4 x 4\n\n" +
-      "Please enter '3' or '4': "
+      "Please enter '" + ttt.Validation.validBoardDimensions('threeByThree) +
+      "' or '" + ttt.Validation.validBoardDimensions('fourByFour) + "': "
 
   val invalidBoardDimension = "\nThere is no board with that dimension. \n"
 

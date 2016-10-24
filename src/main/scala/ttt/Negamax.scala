@@ -2,7 +2,7 @@ package ttt
 
 import scala.util.control.Breaks.{break, breakable}
 
-object Negamax {
+class Negamax {
   val baseDepth = 100
   val maxDepth = 7
   var bestMove = -1
@@ -16,7 +16,7 @@ object Negamax {
 
     var maxScore = Double.NegativeInfinity
 
-    def isFinalState() = {
+    def isFinalState = {
       EvalGame.gameOver(board) || depth >= maxDepth
     }
 
@@ -30,7 +30,7 @@ object Negamax {
       }
     }
 
-    if (isFinalState()) {
+    if (isFinalState) {
       boardAnalysis()
     }
 

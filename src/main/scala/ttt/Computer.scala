@@ -9,8 +9,9 @@ class Computer(val marker: Symbol) extends Player {
     if (Board.isEmpty(board)) {
       Board.center(board.length)
     } else {
-      Negamax.score(board, currentPlayerMarker, opponentMarker, depth)
-      Negamax.bestMove
+      val search = new Negamax
+      search.score(board, currentPlayerMarker, opponentMarker, depth)
+      search.bestMove
     }
   }
 }

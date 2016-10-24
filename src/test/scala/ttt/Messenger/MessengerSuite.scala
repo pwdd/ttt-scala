@@ -1,6 +1,7 @@
-package ttt
+package ttt.Messenger
 
 import org.scalatest.FunSuite
+import ttt.Board
 
 class MessengerSuite extends FunSuite {
   val x = Board.firstPlayer
