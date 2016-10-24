@@ -11,7 +11,7 @@ object Runner {
     def chosenLanguage = {
       val choice = Prompt.getUserChoice(
         "\nEnter " + Validation.validLanguages('english) + " for English | " +
-          "Introduzca " + Validation.validLanguages('spanish) + " para Español | + " +
+          "Introduzca " + Validation.validLanguages('spanish) + " para Español | " +
           "Digite " + Validation.validLanguages('portuguese) + " para Português: ",
         "Not valid | No es válido | Não é um número válido",
         Validation.isValidLanguage)
@@ -27,20 +27,10 @@ object Runner {
 
     val game = new Game(messenger)
 
-    def getOpponent(gameType: String): Player = {
-      if (gameType == Validation.validGameTypes('humanXHuman)) {
-        new User(Board.secondPlayer, messenger.chooseANumber, messenger.invalidMove)
-      } else {
-        new Computer(Board.secondPlayer)
-      }
-    }
-
     val gameType= Prompt.getUserChoice(
       messenger.chooseGameType,
       messenger.invalidGameType,
       Validation.isValidGameType)
-
-    val opponent = getOpponent(gameType)
 
     val boardDimension = Prompt.getUserChoice(
       messenger.chooseBoardDimension,
@@ -49,9 +39,19 @@ object Runner {
 
     val board = Board.newBoard(Board.length(boardDimension.toInt))
 
+    def getOpponent(gameType: String): Player = {
+      if (gameType == Validation.validGameTypes('humanXHuman)) {
+        new User(Board.secondPlayer, messenger.chooseANumber(board), messenger.invalidMove)
+      } else {
+        new Computer(Board.secondPlayer)
+      }
+    }
+
+    val opponent = getOpponent(gameType)
+
     View.printMessage(messenger.currentPlayerIs(Board.firstPlayer))
     View.printMessage(messenger.strBoard(board))
 
-    game.gameLoop(board, new User(Board.firstPlayer, messenger.chooseANumber, messenger.invalidMove), opponent, messenger)
+    game.gameLoop(board, new User(Board.firstPlayer, messenger.chooseANumber(board), messenger.invalidMove), opponent, messenger)
   }
 }

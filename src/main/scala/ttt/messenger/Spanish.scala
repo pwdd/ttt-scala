@@ -1,7 +1,6 @@
 package ttt.messenger
 
 class Spanish extends Messenger {
-  val chooseANumber = "Introduzca un número entre 1 y 9: "
 
   val invalidMove = "\nSu opción no es válida. \n"
 
@@ -23,6 +22,8 @@ class Spanish extends Messenger {
       "' o '" + ttt.Validation.validBoardDimensions('fourByFour) + "': "
 
   val invalidBoardDimension = "\nNo hay un tablero con esta dimensión. \n"
+
+  def chooseANumber(board: List[Symbol]) = "Introduzca un número entre 1 y " + board.length + ": "
 
   def currentPlayerIs(player: Symbol): String = "\nEl actual jugador es '" + player.name + "'"
 

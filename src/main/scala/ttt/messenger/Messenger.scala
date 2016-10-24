@@ -3,15 +3,13 @@ package ttt.messenger
 import ttt.Board
 
 abstract class Messenger {
-  val chooseANumber: String
   val invalidMove: String
   val chooseGameType: String
   val invalidGameType: String
   val chooseBoardDimension: String
   val invalidBoardDimension: String
 
-  val languageChoice = "\nEnter 1 for English | Entra 2 para Español: "
-  val invalidLanguageChoice = "Not valid | No es válido"
+  def chooseANumber(board: List[Symbol]): String
 
   def currentPlayerIs(player: Symbol): String
 
