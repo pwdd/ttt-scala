@@ -1,8 +1,9 @@
-package ttt
+package ttt.player
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 
 import org.scalatest.FunSuite
+import ttt.Board
 
 class UserSuite extends FunSuite {
   val stream = new ByteArrayOutputStream()

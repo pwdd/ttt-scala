@@ -1,4 +1,4 @@
-package ttt
+package ttt.player
 
 abstract class Player {
   val marker: Symbol

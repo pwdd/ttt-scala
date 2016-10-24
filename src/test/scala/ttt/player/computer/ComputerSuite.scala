@@ -1,6 +1,8 @@
-package ttt
+package ttt.player.computer
 
 import org.scalatest.FunSuite
+import ttt.Board
+import ttt.player.Player
 
 class ComputerSuite extends FunSuite {
   val x = Board.firstPlayer

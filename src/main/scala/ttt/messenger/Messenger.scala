@@ -1,4 +1,4 @@
-package ttt.Messenger
+package ttt.messenger
 
 import ttt.Board
 

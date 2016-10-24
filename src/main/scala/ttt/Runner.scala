@@ -1,6 +1,8 @@
 package ttt
 
-import ttt.Messenger._
+import ttt.messenger._
+import ttt.player.computer.Computer
+import ttt.player.{Player, User}
 
 object Runner {
 

@@ -1,6 +1,7 @@
-package ttt
+package ttt.player.computer
 
 import org.scalatest.FunSuite
+import ttt.Board
 
 class NegamaxSuite extends FunSuite {
   val e = Board.emptySpot

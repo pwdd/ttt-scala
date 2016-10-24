@@ -1,4 +1,6 @@
-package ttt
+package ttt.player
+
+import ttt.{Prompt, Validation, View}
 
 class User(val marker: Symbol, val validMessage: String = "", val invalidMessage: String = "") extends Player {
 

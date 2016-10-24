@@ -1,4 +1,4 @@
-package ttt.Messenger
+package ttt.messenger
 
 import org.scalatest.FunSuite
 import ttt.Board
@@ -7,7 +7,7 @@ class MessengerSuite extends FunSuite {
   val x = Board.firstPlayer
   val o = Board.secondPlayer
   val e = Board.emptySpot
-  val messenger = new ttt.Messenger.English
+  val messenger = new ttt.messenger.English
 
   test("printBoard: returns a string version of a 3x3 board") {
     val separator = "\n---|---|---\n"

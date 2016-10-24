@@ -1,4 +1,4 @@
-package ttt.Messenger
+package ttt.messenger
 
 class Portuguese extends Messenger {
   val chooseANumber = "Entre um número de 1 a 9: "

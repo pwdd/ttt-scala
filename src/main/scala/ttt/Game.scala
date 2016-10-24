@@ -1,6 +1,7 @@
 package ttt
 
-import ttt.Messenger._
+import ttt.messenger._
+import ttt.player.Player
 
 class Game(val messenger: Messenger) {
   def gameLoop(board: List[Symbol], currentPlayer: Player, opponent: Player, messenger: Messenger): Unit = {

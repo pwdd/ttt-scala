@@ -1,4 +1,6 @@
-package ttt
+package ttt.player.computer
+
+import ttt.{Board, EvalGame}
 
 import scala.util.control.Breaks.{break, breakable}
 

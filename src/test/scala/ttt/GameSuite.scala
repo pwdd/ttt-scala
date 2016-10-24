@@ -3,12 +3,15 @@ package ttt
 import org.scalatest.{FunSuite, Matchers}
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 
+import ttt.player.computer.Computer
+import ttt.player.{Player, User}
+
 class GameSuite extends FunSuite with Matchers {
   val board = Board.newBoard(9)
   val firstHuman = new User(Board.firstPlayer)
   val secondHuman = new User(Board.secondPlayer)
   val computer = new Computer(Board.secondPlayer)
-  val messenger = new ttt.Messenger.English
+  val messenger = new ttt.messenger.English
   val language = "1\n"
   val againstHuman = "1\n"
   val againstComputer = "2\n"
@@ -16,7 +19,7 @@ class GameSuite extends FunSuite with Matchers {
   val fourByFour = "4\n"
 
   def mock(input: String, secondPlayer: Player) = {
-    lazy val game = new Game(new ttt.Messenger.English)
+    lazy val game = new Game(new ttt.messenger.English)
     lazy val stream = new ByteArrayOutputStream()
     lazy val in = new ByteArrayInputStream(input.getBytes())
 

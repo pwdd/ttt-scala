@@ -1,4 +1,7 @@
-package ttt
+package ttt.player.computer
+
+import ttt.player.Player
+import ttt.{Board, EvalGame}
 
 class Computer(val marker: Symbol) extends Player {
   def getSpot(board: List[Symbol]): Int = {
