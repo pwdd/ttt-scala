@@ -1,7 +1,7 @@
 package ttt
 
 object Validation {
-  val validGameTypes = Map('humanXHuman -> "1", 'humanXComputer -> "2")
+  val validGameTypes = Map('humanXHuman -> "1", 'humanXComputer -> "2", 'computerXComputer -> "3")
   val validBoardDimensions = Map('threeByThree -> "3", 'fourByFour -> "4")
   val validLanguages = Map('english -> "1", 'spanish -> "2", 'portuguese -> "3")
 

@@ -9,7 +9,9 @@ class Spanish extends Messenger {
       ttt.Validation.validGameTypes('humanXHuman) +
       ". Humano x Humano\n" +
       ttt.Validation.validGameTypes('humanXComputer) +
-      ". Humano x Computadora Imbatible\n\n" +
+      ". Humano x Computadora\n" +
+      ttt.Validation.validGameTypes('humanXComputer) +
+      ". Computadora x Computadora\n\n" +
       "Por favor, introduzca el número correspondiente: "
 
   val invalidGameType = "\nNo hay un juego de este tipo. \n"

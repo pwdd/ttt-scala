@@ -28,23 +28,34 @@ class ValidationSuite extends  FunSuite {
     assert(Validation.isValidMove(emptyBoard, 0))
   }
 
-  test("isValidBoardDimension: returns true if arg is a value in 'Game.validBoardDimension' map") {
+  test("isValidGameType: returns true if arg is a value in 'Validation.validGameTypes' map") {
+    assert(Validation.isValidGameType("1"))
+    assert(Validation.isValidGameType("2"))
+    assert(Validation.isValidGameType("3"))
+  }
+
+  test("isValidGameType: returns false if arg is not a value in 'Validation.validGameTypes' map") {
+    assert(!Validation.isValidBoardDimension("0"))
+    assert(!Validation.isValidGameType("a"))
+  }
+
+  test("isValidBoardDimension: returns true if arg is a value in 'Validation.validBoardDimension' map") {
     assert(Validation.isValidBoardDimension("3"))
     assert(Validation.isValidBoardDimension("4"))
   }
 
-  test("isValidBoardDimension: returns false if arg is not a value in 'Game.validBoardDimension' map") {
+  test("isValidBoardDimension: returns false if arg is not a value in 'Validation.validBoardDimension' map") {
     assert(!Validation.isValidBoardDimension("a"))
     assert(!Validation.isValidBoardDimension("0"))
   }
 
-  test("isValidLanguage: returns true if arg is a value in 'Game.validLanguages' map") {
+  test("isValidLanguage: returns true if arg is a value in 'Validation.validLanguages' map") {
     assert(Validation.isValidLanguage("1"))
     assert(Validation.isValidLanguage("2"))
     assert(Validation.isValidLanguage("3"))
   }
 
-  test("isValidLanguage: returns false if arg is not a value in 'Game.validLanguages' map") {
+  test("isValidLanguage: returns false if arg is not a value in 'Validation.validLanguages' map") {
     assert(!Validation.isValidLanguage("0"))
     assert(!Validation.isValidLanguage("a"))
   }
