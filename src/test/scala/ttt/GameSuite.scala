@@ -10,13 +10,14 @@ class GameSuite extends FunSuite with Matchers {
   val board = Board.newBoard(9)
   val firstHuman = new User(Board.firstPlayer)
   val secondHuman = new User(Board.secondPlayer)
-  val computer = new Computer(Board.secondPlayer)
+  val firstComputer = new Computer(Board.firstPlayer)
+  val secondComputer = new Computer(Board.secondPlayer)
   val messenger = new ttt.messenger.English
   val language = "1\n"
+  lazy val game = new Game(new ttt.messenger.English)
+  lazy val stream = new ByteArrayOutputStream()
 
   def mock(input: String, secondPlayer: Player) = {
-    lazy val game = new Game(new ttt.messenger.English)
-    lazy val stream = new ByteArrayOutputStream()
     lazy val in = new ByteArrayInputStream(input.getBytes())
 
     def methodRun() = game.gameLoop(board, firstHuman, secondPlayer, messenger)
@@ -44,7 +45,13 @@ class GameSuite extends FunSuite with Matchers {
     mock("1\n1\n2\na\n\n3\n4\n5\n6\n7\n", secondHuman)
   }
 
-  test("gameLoop: does not throw exception when game is against computer") {
-    mock("1\n2\n4\n", computer)
+  test("gameLoop: does not throw exception when game is against secondComputer") {
+    mock("1\n2\n4\n", secondComputer)
+  }
+
+  test("gameLoop: does not throw exception when game is computer x computer") {
+    Console.withOut(stream) {
+      noException should be thrownBy game.gameLoop(board, firstComputer, secondComputer, messenger)
+    }
   }
 }

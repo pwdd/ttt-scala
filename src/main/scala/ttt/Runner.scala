@@ -39,7 +39,7 @@ object Runner {
 
     val board = Board.newBoard(Board.length(boardDimension.toInt))
 
-    def getOpponent(gameType: String): Player = {
+    def getOpponent: Player = {
       if (gameType == Validation.validGameTypes('humanXHuman)) {
         new User(Board.secondPlayer, messenger.chooseANumber(board), messenger.invalidMove)
       } else {
@@ -47,11 +47,19 @@ object Runner {
       }
     }
 
-    val opponent = getOpponent(gameType)
+    def getFirstPlayer: Player = gameType match {
+      case computer if gameType == Validation.validGameTypes('computerXComputer) =>
+        new Computer(Board.firstPlayer)
+      case _ => new User(Board.firstPlayer, messenger.chooseANumber(board), messenger.invalidGameType)
+    }
+
+    val firstPlayer = getFirstPlayer
+
+    val opponent = getOpponent
 
     View.printMessage(messenger.currentPlayerIs(Board.firstPlayer))
     View.printMessage(messenger.strBoard(board))
 
-    game.gameLoop(board, new User(Board.firstPlayer, messenger.chooseANumber(board), messenger.invalidMove), opponent, messenger)
+    game.gameLoop(board, firstPlayer, opponent, messenger)
   }
 }

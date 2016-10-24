@@ -10,7 +10,7 @@ class Spanish extends Messenger {
       ". Humano x Humano\n" +
       ttt.Validation.validGameTypes('humanXComputer) +
       ". Humano x Computadora\n" +
-      ttt.Validation.validGameTypes('humanXComputer) +
+      ttt.Validation.validGameTypes('computerXComputer) +
       ". Computadora x Computadora\n\n" +
       "Por favor, introduzca el número correspondiente: "
 

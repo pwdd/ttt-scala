@@ -10,7 +10,7 @@ class English extends Messenger {
       ttt.Validation.validGameTypes('humanXComputer) +
        ". Human vs Computer\n" +
       ttt.Validation.validGameTypes('computerXComputer) +
-      "Computer vs Computer\n\n" +
+      ". Computer vs Computer\n\n" +
       "Please enter the correspondent number: "
 
   val invalidGameType = "\nThere is no such a game. \n"
