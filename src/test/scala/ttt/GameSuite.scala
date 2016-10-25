@@ -3,24 +3,28 @@ package ttt
 import org.scalatest.{FunSuite, Matchers}
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 
-import ttt.player.computer.Computer
-import ttt.player.{Player, User}
-
 class GameSuite extends FunSuite with Matchers {
   val board = Board.newBoard(9)
-  val firstHuman = new User(Board.firstPlayer)
-  val secondHuman = new User(Board.secondPlayer)
-  val firstComputer = new Computer(Board.firstPlayer)
-  val secondComputer = new Computer(Board.secondPlayer)
+
+  val humanA = new ttt.player.User(Board.firstPlayer, new ttt.messenger.English)
+  val humanB = new ttt.player.User(Board.secondPlayer, new ttt.messenger.English)
+
+  val easyComputerA = new ttt.player.computer.EasyComputer(Board.firstPlayer)
+  val easyComputerB = new ttt.player.computer.EasyComputer(Board.secondPlayer)
+
+  val hardComputerA = new ttt.player.computer.HardComputer(Board.firstPlayer)
+  val hardComputerB = new ttt.player.computer.HardComputer(Board.secondPlayer)
+
   val messenger = new ttt.messenger.English
   val language = "1\n"
-  lazy val game = new Game(new ttt.messenger.English)
-  lazy val stream = new ByteArrayOutputStream()
 
-  def mock(input: String, secondPlayer: Player) = {
-    lazy val in = new ByteArrayInputStream(input.getBytes())
+  val game = new Game(new ttt.messenger.English)
+  val stream = new ByteArrayOutputStream()
 
-    def methodRun() = game.gameLoop(board, firstHuman, secondPlayer, messenger)
+  def mock(input: String, firstPlayer: ttt.player.Player, secondPlayer: ttt.player.Player) = {
+    val in = new ByteArrayInputStream(input.getBytes())
+
+    def methodRun() = game.gameLoop(board, humanA, secondPlayer, messenger)
 
     Console.withOut(stream) {
       Console.withIn(in) {
@@ -29,29 +33,47 @@ class GameSuite extends FunSuite with Matchers {
     }
   }
 
-  test("gameLoop: does not throw exception when players enter only valid input") {
-    mock("1\n2\n3\n4\n5\n6\n7\n", secondHuman)
+  test("gameLoop: does not throw exception in human x human when players enter only valid input") {
+    mock("1\n2\n3\n4\n5\n6\n7\n", humanA, humanB)
   }
 
   test("gameLoop: does not throw exception when there is a winner") {
-    mock("1\n4\n2\n5\n3\n", secondHuman)
+    mock("1\n4\n2\n5\n3\n", humanA, humanB)
   }
 
   test("gameLoop: does not throw exception when there is no winner") {
-    mock("1\n2\n3\n5\n8\n4\n6\n9\n7\n", secondHuman)
+    mock("1\n2\n3\n5\n8\n4\n6\n9\n7\n", humanA, humanB)
   }
 
   test("gameLoop: does not throw exception when players enter invalid input") {
-    mock("1\n1\n2\na\n\n3\n4\n5\n6\n7\n", secondHuman)
+    mock("1\n1\n2\na\n\n3\n4\n5\n6\n7\n", humanA, humanB)
   }
 
-  test("gameLoop: does not throw exception when game is against secondComputer") {
-    mock("1\n2\n4\n", secondComputer)
+  test("gameLoop: does not throw exception when game is human x hard computer") {
+    mock("1\n2\n4\n", humanA, hardComputerB)
   }
 
-  test("gameLoop: does not throw exception when game is computer x computer") {
+  test("gameLoop: does not throw exception when game is easy computer x hard computer") {
     Console.withOut(stream) {
-      noException should be thrownBy game.gameLoop(board, firstComputer, secondComputer, messenger)
+      noException should be thrownBy game.gameLoop(board, easyComputerA, hardComputerB, messenger)
+    }
+  }
+
+  test("gameLoop: does not throw exception when game is hard computer x easy computer") {
+    Console.withOut(stream) {
+      noException should be thrownBy game.gameLoop(board, hardComputerA, easyComputerB, messenger)
+    }
+  }
+
+  test("gameLoop: does not throw exception when game is easy computer x easy computer") {
+    Console.withOut(stream) {
+      noException should be thrownBy game.gameLoop(board, easyComputerA, easyComputerB, messenger)
+    }
+  }
+
+  test("gameLoop: does not throw exception when game is hard computer x hard computer") {
+    Console.withOut(stream) {
+      noException should be thrownBy game.gameLoop(board, hardComputerA, hardComputerB, messenger)
     }
   }
 }

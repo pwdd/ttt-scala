@@ -11,7 +11,7 @@ class UserSuite extends FunSuite {
   val e = Board.emptySpot
   val x = Board.firstPlayer
   val o = Board.secondPlayer
-  val user = new User(x)
+  val user = new User(x, new ttt.messenger.English)
 
   def mock(board: List[Symbol], input: String, expected: Int) = {
     val in = new ByteArrayInputStream(input.getBytes())

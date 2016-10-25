@@ -4,11 +4,11 @@ import org.scalatest.FunSuite
 import ttt.Board
 import ttt.player.Player
 
-class ComputerSuite extends FunSuite {
+class HardComputerSuite extends FunSuite {
   val x = Board.firstPlayer
   val o = Board.secondPlayer
   val e = Board.emptySpot
-  val computer = new Computer(o)
+  val computer = new HardComputer(o)
 
   test("Computer extends 'Player'") {
     assert(computer.isInstanceOf[Player])

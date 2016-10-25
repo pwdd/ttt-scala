@@ -59,4 +59,14 @@ class ValidationSuite extends  FunSuite {
     assert(!Validation.isValidLanguage("0"))
     assert(!Validation.isValidLanguage("a"))
   }
+
+  test("isValidComputerType: returns true if arg is a value in 'Validation.validComputerTypes' map") {
+    assert(Validation.isValidComputerType("1"))
+    assert(Validation.isValidComputerType("2"))
+  }
+
+  test("isValidComputerType: returns false if arg is not a value in 'Validation.validComputerTypes' map") {
+    assert(!Validation.isValidComputerType("a"))
+    assert(!Validation.isValidComputerType("0"))
+  }
 }

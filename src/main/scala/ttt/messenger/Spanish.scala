@@ -25,11 +25,29 @@ class Spanish extends Messenger {
 
   val invalidBoardDimension = "\nNo hay un tablero con esta dimensión. \n"
 
-  def chooseANumber(board: List[Symbol]) = "Introduzca un número entre 1 y " + board.length + ": "
+  val draw = "¡Empate!\n"
+
+  val invalidComputerLevel = "No hay computadora con este nivel\n"
+
+  def computerLevel(first: Boolean): String = {
+    val choices =
+      ttt.Validation.validComputerTypes('easy) +
+        ". fácil\n" +
+        ttt.Validation.validComputerTypes('hard) +
+        ". imbatible\n\n"
+
+    val sentence =
+      " computadora puede ser \n\n" +
+        choices +
+        "Por favor, introduzca el número correspondiente:"
+
+    if (first) "La primera" + sentence
+    else "La segunda" + sentence
+  }
+
+  def chooseANumber(boardLength: Int) = "Introduzca un número entre 1 y " + boardLength + ": "
 
   def currentPlayerIs(player: Symbol): String = "\nEl actual jugador es '" + player.name + "'"
-
-  def draw(board: List[Symbol]): String = "¡Empate!\n"
 
   def win(winner: Option[Symbol], position: List[Int]): String = {
     val indexToUserFriendlyNumbers = position.map(_ + 1)

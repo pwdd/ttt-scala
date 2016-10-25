@@ -1,8 +1,8 @@
 package ttt.player
 
-import ttt.{Prompt, Validation, View}
+class User(val marker: Symbol, val messenger: ttt.messenger.Messenger) extends Player {
 
-class User(val marker: Symbol, val validMessage: String = "", val invalidMessage: String = "") extends Player {
+  val isAI = false
 
   private def isNumericString(input: String): Boolean = {
 
@@ -14,14 +14,20 @@ class User(val marker: Symbol, val validMessage: String = "", val invalidMessage
   }
 
   def getSpot(board: List[Symbol]): Int = {
+    val invalidMessage = messenger.invalidMove
 
-    val input = Prompt.getUserChoice(validMessage, invalidMessage, isNumericString)
+    val input = ttt.Prompt.getUserChoice(
+      messenger.chooseANumber(board.length),
+      invalidMessage,
+      isNumericString)
 
     def inputToNumber: Int = input.toInt - 1
 
-    if (Validation.isValidMove(board, inputToNumber)) inputToNumber
+    if (ttt.Validation.isValidMove(board, inputToNumber)) {
+      inputToNumber
+    }
     else {
-      View.printMessage(invalidMessage)
+      ttt.View.printMessage(invalidMessage)
       getSpot(board)
     }
   }

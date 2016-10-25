@@ -1,12 +1,8 @@
 package ttt
 
-import ttt.messenger._
-import ttt.player.computer.Computer
-import ttt.player.{Player, User}
-
 object Runner {
 
-  def play(): Unit = {
+  def play(waitTime: Int = 0): Unit = {
 
     def chosenLanguage = {
       val choice = Prompt.getUserChoice(
@@ -17,49 +13,58 @@ object Runner {
         Validation.isValidLanguage)
 
       choice match {
-        case spanish if choice == Validation.validLanguages('spanish) => new Spanish
-        case portuguese if choice == Validation.validLanguages('portuguese) => new Portuguese
-        case _ => new English
+        case spanish if choice == Validation.validLanguages('spanish) => new messenger.Spanish
+        case portuguese if choice == Validation.validLanguages('portuguese) => new messenger.Portuguese
+        case _ => new messenger.English
       }
     }
 
-    val messenger = chosenLanguage
+    val messengerSuite = chosenLanguage
 
-    val game = new Game(messenger)
+    val game = new Game(messengerSuite)
 
     val gameType= Prompt.getUserChoice(
-      messenger.chooseGameType,
-      messenger.invalidGameType,
+      messengerSuite.chooseGameType,
+      messengerSuite.invalidGameType,
       Validation.isValidGameType)
 
-    val boardDimension = Prompt.getUserChoice(
-      messenger.chooseBoardDimension,
-      messenger.invalidBoardDimension,
-      Validation.isValidBoardDimension)
-
-    val board = Board.newBoard(Board.length(boardDimension.toInt))
-
-    def getOpponent: Player = {
-      if (gameType == Validation.validGameTypes('humanXHuman)) {
-        new User(Board.secondPlayer, messenger.chooseANumber(board), messenger.invalidMove)
-      } else {
-        new Computer(Board.secondPlayer)
-      }
+    def defineComputer(marker: Symbol, first: Boolean) = {
+      val choice = Prompt.getUserChoice(
+        messengerSuite.computerLevel(first),
+        messengerSuite.invalidComputerLevel,
+        Validation.isValidComputerType)
+      if (choice == Validation.validComputerTypes('easy)) new player.computer.EasyComputer(marker)
+      else new player.computer.HardComputer(marker)
     }
 
-    def getFirstPlayer: Player = gameType match {
-      case computer if gameType == Validation.validGameTypes('computerXComputer) =>
-        new Computer(Board.firstPlayer)
-      case _ => new User(Board.firstPlayer, messenger.chooseANumber(board), messenger.invalidGameType)
+    def getOpponent: player.Player = gameType match {
+      case bothHuman if gameType == Validation.validGameTypes('humanXHuman) =>
+        new player.User(
+          Board.secondPlayer, messengerSuite)
+      case _ => defineComputer(Board.secondPlayer, false)
+    }
+
+    def getFirstPlayer: player.Player = gameType match {
+      case computerXComputer if gameType == Validation.validGameTypes('computerXComputer) =>
+        defineComputer(Board.firstPlayer, true)
+      case _ => new player.User(
+        Board.firstPlayer, messengerSuite)
     }
 
     val firstPlayer = getFirstPlayer
 
     val opponent = getOpponent
 
-    View.printMessage(messenger.currentPlayerIs(Board.firstPlayer))
-    View.printMessage(messenger.strBoard(board))
+    val boardDimension = Prompt.getUserChoice(
+      messengerSuite.chooseBoardDimension,
+      messengerSuite.invalidBoardDimension,
+      Validation.isValidBoardDimension)
 
-    game.gameLoop(board, firstPlayer, opponent, messenger)
+    val board = Board.newBoard(Board.length(boardDimension.toInt))
+
+    View.printMessage(messengerSuite.currentPlayerIs(Board.firstPlayer))
+    View.printMessage(messengerSuite.strBoard(board))
+
+    game.gameLoop(board, firstPlayer, opponent, messengerSuite, waitTime)
   }
 }

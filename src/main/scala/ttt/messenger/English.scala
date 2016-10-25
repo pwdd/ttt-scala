@@ -24,11 +24,26 @@ class English extends Messenger {
 
   val invalidBoardDimension = "\nThere is no board with that dimension. \n"
 
-  def chooseANumber(board: List[Symbol]) = "Please enter a number from 1 to " + board.length + ": "
+  val draw = "The game tied!\n"
+
+  val invalidComputerLevel = "There is no such computer player\n"
+
+  def computerLevel(first: Boolean): String = {
+    val choices =
+      ttt.Validation.validComputerTypes('easy) +
+        ". easy\n" +
+        ttt.Validation.validComputerTypes('hard) +
+        ". unbeatable\n\n"
+
+    val sentence = " computer player can be \n\n" + choices + "Please enter the correspondent number: "
+
+    if (first) "First" + sentence
+    else "Second" + sentence
+  }
+
+  def chooseANumber(boardLength: Int) = "Please enter a number from 1 to " + boardLength + ": "
 
   def currentPlayerIs(player: Symbol): String = "\nCurrent player is '" + player.name + "'"
-
-  def draw(board: List[Symbol]): String = "The game tied!\n"
 
   def win(winner: Option[Symbol], position: List[Int]): String = {
     val indexToUserFriendlyNumbers = position.map(_ + 1)
