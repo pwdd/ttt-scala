@@ -6,11 +6,11 @@ class Portuguese extends Messenger {
 
   val chooseGameType =
     "Que tipo de jogo você gostaria de jogar?\n\n" +
-      ttt.Validation.validGameTypes('humanXHuman) +
+      humanXHuman +
       ". Humano x Humano\n" +
-      ttt.Validation.validGameTypes('humanXComputer) +
+      humanXComputer +
       ". Humano x Computador\n" +
-      ttt.Validation.validGameTypes('computerXComputer) +
+      computerXComputer +
       ". Computador x Computador\n\n" +
       "Por favor, entre o número correspondente: "
 
@@ -20,8 +20,8 @@ class Portuguese extends Messenger {
     "Escolha o tamanho do tabuleiro:\n\n" +
       "3 x 3\n" +
       "4 x 4\n\n" +
-      "Entre '" + ttt.Validation.validBoardDimensions('threeByThree) +
-      "' ou '" + ttt.Validation.validBoardDimensions('fourByFour) + "': "
+      "Entre '" + threeByThree +
+      "' ou '" + fourByFour + "': "
 
   val invalidBoardDimension = "\nNão existe tabuleiro com essa dimensão. \n"
 
@@ -31,15 +31,14 @@ class Portuguese extends Messenger {
 
   def computerLevel(first: Boolean): String = {
     val choices =
-      ttt.Validation.validComputerTypes('easy) +
+      easy +
         ". fácil\n" +
-        ttt.Validation.validComputerTypes('hard) +
+        hard +
         ". imbatível\n\n"
 
-    val sentence = " computador pode ser \n\n" + choices + "Digite o número correspondente: "
+    val order = if (first) "O primeiro" else "O segundo"
 
-    if (first) "O primeiro" + sentence
-    else "O segundo" + sentence
+    order + " computador pode ser \n\n" + choices + "Digite o número correspondente: "
   }
 
   def chooseANumber(boardLength: Int) = "Entre um número de 1 a " + boardLength + ": "

@@ -25,37 +25,33 @@ class Negamax {
   }
 
   private def isFinalState(board: List[Symbol], depth: Int) = {
-    ttt.EvalGame.gameOver(board) || depth >= maxDepth
+    gameOver(board) || depth >= maxDepth
   }
 
-  private def boardAnalysis(board: List[Symbol],
-                            currentPlayerMarker: Symbol,
-                            opponentMarker: Symbol,
-                            depth: Int): Int = {
+  private def boardAnalysis(board: List[Symbol], currentPlayerMarker: Symbol, opponentMarker: Symbol, depth: Int): Int = {
 
-    ttt.EvalGame.winnerMarker(board) match {
+    winner(board) match {
       case Some(cp) if cp == currentPlayerMarker => baseDepth - depth
       case Some(o) if o == opponentMarker => depth - baseDepth
       case _ => 0
     }
   }
 
-  private def runSearch(
-                         board: List[Symbol],
-                         currentPlayerMarker: Symbol,
-                         opponentMarker: Symbol,
-                         depth: Int,
-                         alpha: Double,
-                         beta: Double) = {
+  private def runSearch(board: List[Symbol],
+                        currentPlayerMarker: Symbol,
+                        opponentMarker: Symbol,
+                        depth: Int,
+                        alpha: Double,
+                        beta: Double) = {
 
     var maxScore = Double.NegativeInfinity
     var alphaCopy = alpha
 
-    val availableSpots = ttt.Board.availableSpots(board)
+    val spots = availableSpots(board)
 
     breakable {
-      availableSpots.foreach { spot =>
-        val newBoard = ttt.Board.move(board, currentPlayerMarker, spot)
+      spots.foreach { spot =>
+        val newBoard = move(board, currentPlayerMarker, spot)
         val negamaxScore = -score(newBoard, opponentMarker, currentPlayerMarker, depth + 1, -beta, -alphaCopy)
 
         if (negamaxScore > maxScore) {
@@ -72,6 +68,10 @@ class Negamax {
     }
     alphaCopy
   }
+
+  private val move = ttt.Board.move _
+  private val availableSpots = ttt.Board.availableSpots _
+  private val evaluation = ttt.EvalGame
+  private val winner = evaluation.winnerMarker _
+  private val gameOver = evaluation.gameOver _
 }
-
-

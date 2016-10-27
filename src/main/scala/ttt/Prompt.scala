@@ -3,12 +3,9 @@ package ttt
 import scala.io.StdIn._
 
 object Prompt {
-
   def prompt(message: String): String = readLine(message).trim
 
-  def getUserChoice(messageAsk: String,
-                    messageInvalid: String,
-                    validation: (String) => Boolean): String = {
+  def getUserChoice(messageAsk: String, messageInvalid: String, validation: (String) => Boolean): String = {
 
     val userChoice = prompt(messageAsk)
 
@@ -16,8 +13,10 @@ object Prompt {
       userChoice
     }
     else {
-      View.printMessage(messageInvalid)
+      printer(messageInvalid)
       getUserChoice(messageAsk, messageInvalid, validation)
     }
   }
+
+  private val printer = View.printMessage _
 }

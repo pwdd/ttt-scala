@@ -1,20 +1,19 @@
 package ttt
 
 object Runner {
-
   def play(waitTime: Int = 0): Unit = {
 
     def chosenLanguage = {
-      val choice = Prompt.getUserChoice(
-        "\nEnter " + Validation.validLanguages('english) + " for English | " +
-          "Introduzca " + Validation.validLanguages('spanish) + " para Español | " +
-          "Digite " + Validation.validLanguages('portuguese) + " para Português: ",
+      val choice = getInput(
+        "\nEnter " + english + " for English | " +
+          "Introduzca " + spanish + " para Español | " +
+          "Digite " + portuguese + " para Português: ",
         "Not valid | No es válido | Não é um número válido",
-        Validation.isValidLanguage)
+        validation.isValidLanguage)
 
       choice match {
-        case spanish if choice == Validation.validLanguages('spanish) => new messenger.Spanish
-        case portuguese if choice == Validation.validLanguages('portuguese) => new messenger.Portuguese
+        case es if choice == spanish => new messenger.Spanish
+        case pt if choice == portuguese => new messenger.Portuguese
         case _ => new messenger.English
       }
     }
@@ -23,48 +22,59 @@ object Runner {
 
     val game = new Game(messengerSuite)
 
-    val gameType= Prompt.getUserChoice(
+    val gameType= getInput(
       messengerSuite.chooseGameType,
       messengerSuite.invalidGameType,
-      Validation.isValidGameType)
+      validation.isValidGameType)
 
     def defineComputer(marker: Symbol, first: Boolean) = {
-      val choice = Prompt.getUserChoice(
+      val choice = getInput(
         messengerSuite.computerLevel(first),
         messengerSuite.invalidComputerLevel,
-        Validation.isValidComputerType)
-      if (choice == Validation.validComputerTypes('easy)) new player.computer.EasyComputer(marker)
+        validation.isValidComputerType)
+      if (choice == easy) new player.computer.EasyComputer(marker)
       else new player.computer.HardComputer(marker)
     }
 
     def getOpponent: player.Player = gameType match {
-      case bothHuman if gameType == Validation.validGameTypes('humanXHuman) =>
+      case bothHuman if gameType == humanXHuman =>
         new player.User(
-          Board.secondPlayer, messengerSuite)
-      case _ => defineComputer(Board.secondPlayer, false)
+          secondPlayer, messengerSuite)
+      case _ => defineComputer(secondPlayer, false)
     }
 
     def getFirstPlayer: player.Player = gameType match {
-      case computerXComputer if gameType == Validation.validGameTypes('computerXComputer) =>
-        defineComputer(Board.firstPlayer, true)
+      case cxc if gameType == computerXComputer =>
+        defineComputer(firstPlayer, true)
       case _ => new player.User(
-        Board.firstPlayer, messengerSuite)
+        firstPlayer, messengerSuite)
     }
 
-    val firstPlayer = getFirstPlayer
+    val currentPlayer = getFirstPlayer
 
     val opponent = getOpponent
 
-    val boardDimension = Prompt.getUserChoice(
+    val boardDimension = getInput(
       messengerSuite.chooseBoardDimension,
       messengerSuite.invalidBoardDimension,
       Validation.isValidBoardDimension)
 
     val board = Board.newBoard(Board.length(boardDimension.toInt))
 
-    View.printMessage(messengerSuite.currentPlayerIs(Board.firstPlayer))
+    View.printMessage(messengerSuite.currentPlayerIs(firstPlayer))
     View.printMessage(messengerSuite.strBoard(board))
 
-    game.gameLoop(board, firstPlayer, opponent, messengerSuite, waitTime)
+    game.gameLoop(board, currentPlayer, opponent, messengerSuite, waitTime)
   }
+
+  private val firstPlayer = Board.firstPlayer
+  private val secondPlayer = Board.secondPlayer
+  private val getInput = Prompt.getUserChoice _
+  private val validation = Validation
+  private lazy val english = validation.validLanguages('english)
+  private lazy val spanish = validation.validLanguages('spanish)
+  private lazy val portuguese = validation.validLanguages('portuguese)
+  private lazy val easy = validation.validComputerTypes('easy)
+  private lazy val humanXHuman = validation.validGameTypes('humanXHuman)
+  private lazy val computerXComputer = validation.validGameTypes('computerXComputer)
 }

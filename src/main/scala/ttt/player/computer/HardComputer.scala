@@ -4,12 +4,12 @@ class HardComputer(val marker: Symbol) extends ttt.player.Player {
   val isAI = true
 
   def getSpot(board: List[Symbol]): Int = {
-    val currentPlayerMarker = ttt.EvalGame.currentPlayerMarker(board)
-    val opponentMarker = ttt.EvalGame.opponentMarker(currentPlayerMarker)
+    val currentPlayerMarker = currentPlayer(board)
+    val opponentMarker = opponent(currentPlayerMarker)
     val depth = 0
 
-    if (ttt.Board.isEmpty(board)) {
-      ttt.Board.center(board.length)
+    if (isBoardEmpty(board)) {
+      center(board.length)
     } else {
       search(board, currentPlayerMarker, opponentMarker, depth)
     }
@@ -20,4 +20,10 @@ class HardComputer(val marker: Symbol) extends ttt.player.Player {
     search.score(board, currentPlayerMarker, opponentMarker, depth)
     search.bestMove
   }
+
+  private val evaluation = ttt.EvalGame
+  private val currentPlayer = evaluation.currentPlayerMarker _
+  private val opponent = evaluation.opponentMarker _
+  private val isBoardEmpty = ttt.Board.isEmpty _
+  private val center = ttt.Board.center _
 }

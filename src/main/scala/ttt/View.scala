@@ -5,5 +5,5 @@ object View {
     println(message)
   }
 
-  def wait(duration: Int) = Thread.sleep(duration)
+  def delay(duration: Int) = Thread.sleep(duration)
 }

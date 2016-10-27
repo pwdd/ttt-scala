@@ -6,7 +6,9 @@ class EasyComputer(val marker: Symbol) extends ttt.player.Player {
   val isAI = true
 
   def getSpot(board: List[Symbol]) = {
-    val spots = ttt.Board.availableSpots(board)
+    val spots = availableSpots(board)
     Random.shuffle(spots).head
   }
+
+  private val availableSpots = ttt.Board.availableSpots _
 }

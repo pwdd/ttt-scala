@@ -9,6 +9,24 @@ abstract class Messenger {
   val draw: String
   val invalidComputerLevel: String
 
+  val validation = ttt.Validation
+
+  val humanXHuman = validation.validGameTypes('humanXHuman)
+  val humanXComputer = validation.validGameTypes('humanXComputer)
+  val computerXComputer = validation.validGameTypes('computerXComputer)
+
+  val threeByThree = validation.validBoardDimensions('threeByThree)
+  val fourByFour = validation.validBoardDimensions('fourByFour)
+
+  val english = validation.validLanguages('english)
+  val spanish = validation.validLanguages('spanish)
+  val portuguese = validation.validLanguages('portuguese)
+
+  val easy = validation.validComputerTypes('easy)
+  val hard = validation.validComputerTypes('hard)
+
+  val boardSize = ttt.Board.size _
+
   def computerLevel(first: Boolean): String
 
   def chooseANumber(boardLength: Int): String
@@ -20,7 +38,7 @@ abstract class Messenger {
   def strBoard(board: List[Symbol]): String = {
     val pipe = "|"
     val dashes = "---"
-    val separator = "\n" + List.fill(ttt.Board.size(board))(dashes).mkString(pipe) + "\n"
+    val separator = "\n" + List.fill(boardSize(board))(dashes).mkString(pipe) + "\n"
 
     def symbolToStr(marker: Symbol): String = {
       if (marker == ttt.Board.emptySpot) "   "
@@ -28,7 +46,7 @@ abstract class Messenger {
     }
 
     def buildStrBoard(board: List[String]): Any = {
-      val breakLines = board.grouped(ttt.Board.size(board)).toList.map(_.mkString(pipe))
+      val breakLines = board.grouped(boardSize(board)).toList.map(_.mkString(pipe))
       breakLines.mkString(separator)
     }
 
