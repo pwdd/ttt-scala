@@ -13,10 +13,8 @@ object Prompt {
       userChoice
     }
     else {
-      printer(messageInvalid)
+      View.printMessage(messageInvalid)
       getUserChoice(messageAsk, messageInvalid, validation)
     }
   }
-
-  private val printer = View.printMessage _
 }

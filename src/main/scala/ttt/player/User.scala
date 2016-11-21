@@ -1,27 +1,27 @@
 package ttt.player
 
+import ttt.View
+import ttt.Prompt
+import ttt.Validation
+
 class User(val marker: Symbol, val messenger: ttt.messenger.Messenger) extends Player {
   val isAI = false
 
   def getSpot(board: List[Symbol]): Int = {
     val invalidMessage = messenger.invalidMove
 
-    val input = getChoice(messenger.chooseANumber(board.length), invalidMessage, isNumericString)
+    val input = Prompt.getUserChoice(messenger.chooseANumber(board.length), invalidMessage, isNumericString)
 
     def inputToNumber: Int = input.toInt - 1
 
-    if (isValidMove(board, inputToNumber)) {
+    if (Validation.isValidMove(board, inputToNumber)) {
       inputToNumber
     }
     else {
-      printer(invalidMessage)
+      View.printMessage(invalidMessage)
       getSpot(board)
     }
   }
-
-  private val printer = ttt.View.printMessage _
-  private val getChoice = ttt.Prompt.getUserChoice _
-  private val isValidMove = ttt.Validation.isValidMove _
 
   private def isNumericString(input: String): Boolean = {
 
