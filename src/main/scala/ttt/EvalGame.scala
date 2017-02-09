@@ -1,6 +1,7 @@
 package ttt
 
 object EvalGame {
+  private val (emptySpot, firstPlayer, secondPlayer) = (Board.emptySpot, Board.firstPlayer, Board.secondPlayer)
 
   def winCombos(size: Int) = {
     val indexes = Board.indexes(size * size)
@@ -30,7 +31,7 @@ object EvalGame {
   }
 
   def isDraw(board: List[Symbol]): Boolean = {
-    isFull(board) && winCombo(board).isEmpty
+    Board.isFull(board) && winCombo(board).isEmpty
   }
 
   def gameOver(board: List[Symbol]): Boolean = isDraw(board) || winCombo(board).nonEmpty
@@ -58,7 +59,4 @@ object EvalGame {
     if (currentPlayerMarker == firstPlayer) secondPlayer
     else firstPlayer
   }
-
-  private val (emptySpot, firstPlayer, secondPlayer) = (Board.emptySpot, Board.firstPlayer, Board.secondPlayer)
-  private val isFull = Board.isFull _
 }

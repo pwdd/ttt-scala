@@ -1,6 +1,6 @@
 package ttt
 
-import scala.io.StdIn._
+import scala.io.StdIn.readLine
 
 object Prompt {
   def prompt(message: String): String = readLine(message).trim
